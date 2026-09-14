@@ -26,7 +26,7 @@ export async function sendRfqEmails(params: SendRfqEmailsParams): Promise<void> 
   try {
     // 1. Email to Submitter
     const submitterHtml = `
-      <div style="font-family: sans-serif; color: #063d1f; max-width: 600px; margin: 0 auto; border: 1px solid #0d7a3f22; padding: 24px; borderRadius: 8px; background-color: #f4f7f5;">
+      <div style="font-family: sans-serif; color: #063d1f; max-width: 600px; margin: 0 auto; border: 1px solid #0d7a3f22; padding: 24px; border-radius: 8px; background-color: #f4f7f5;">
         <h2 style="color: #0d7a3f; margin-top: 0;">Request for Quotation Received</h2>
         <p>Dear ${params.contactName},</p>
         <p>Thank you for reaching out to OCNKS Global Ltd. Your request for quotation has been received and logged successfully.</p>
@@ -60,7 +60,7 @@ export async function sendRfqEmails(params: SendRfqEmailsParams): Promise<void> 
 
     // 2. Internal Notification Email to OCNKS Global Team
     const internalHtml = `
-      <div style="font-family: sans-serif; color: #063d1f; max-width: 600px; margin: 0 auto; border: 1px solid #0d7a3f22; padding: 24px; borderRadius: 8px;">
+      <div style="font-family: sans-serif; color: #063d1f; max-width: 600px; margin: 0 auto; border: 1px solid #0d7a3f22; padding: 24px; border-radius: 8px;">
         <h2 style="color: #0d7a3f; margin-top: 0;">New RFQ Submitted: ${params.publicId}</h2>
 
         <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
@@ -90,5 +90,45 @@ export async function sendRfqEmails(params: SendRfqEmailsParams): Promise<void> 
     });
   } catch (error) {
     console.error(`[RFQ ${params.publicId}] Failed to send email notifications:`, error);
+  }
+}
+
+export async function sendWelcomeEmail(to: string, name: string): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey || apiKey.trim() === "") {
+    console.log(`[WELCOME EMAIL] Welcome email skipped for ${to}: no RESEND_API_KEY`);
+    return;
+  }
+
+  const from = process.env.EMAIL_FROM || "OCNKS Global <onboarding@resend.dev>";
+  const resend = new Resend(apiKey);
+
+  try {
+    const html = `
+      <div style="font-family: sans-serif; color: #063d1f; max-width: 600px; margin: 0 auto; border: 1px solid #0d7a3f22; padding: 24px; border-radius: 8px; background-color: #f4f7f5;">
+        <h2 style="color: #0d7a3f; margin-top: 0;">Welcome to OCNKS Global Console</h2>
+        <p>Dear ${name},</p>
+        <p>Your client account with OCNKS Global Ltd has been created successfully. You can now log in to submit requests for quotation, track status, and view project updates.</p>
+
+        <p>Thank you for choosing OCNKS Global Ltd as your technical services partner.</p>
+
+        <hr style="border: none; border-top: 1px solid #0d7a3f22; margin: 24px 0;" />
+
+        <p style="font-size: 12px; color: #063d1f99;">
+          OCNKS GLOBAL LTD<br/>
+          Port Harcourt · Abuja · Nigeria<br/>
+          Email: ocnksglobal@gmail.com · Phone: +234 810 869 0772
+        </p>
+      </div>
+    `;
+
+    await resend.emails.send({
+      from,
+      to,
+      subject: "Welcome to OCNKS Global Console - Account Ready",
+      html,
+    });
+  } catch (error) {
+    console.error(`[WELCOME EMAIL ERROR] Failed to send welcome email to ${to}:`, error);
   }
 }
