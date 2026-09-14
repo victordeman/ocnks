@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const navItems = [
   { name: "About", href: "/about" },
@@ -16,6 +17,7 @@ export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
   const pathname = usePathname();
+  const { data: session, status } = useSession();
 
   // Handle Escape key press to close menu and restore focus to trigger button
   useEffect(() => {
@@ -83,6 +85,24 @@ export function SiteHeader() {
               </Link>
             );
           })}
+
+          {status === "authenticated" && session?.user ? (
+            <Link
+              href="/app"
+              className="flex items-center gap-2 text-sm font-medium bg-brand-green/30 hover:bg-brand-green/50 px-3 py-2 rounded text-brand-gold border border-brand-gold/30 transition-colors"
+            >
+              <span>Console</span>
+              <span className="text-brand-paper/80 font-normal">({session.user.name || session.user.email})</span>
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm font-medium transition-colors hover:text-brand-gold text-brand-paper/90 px-3 py-2"
+            >
+              Sign in
+            </Link>
+          )}
+
           <Link
             href="/quote"
             className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-semibold px-4 py-2 rounded text-sm transition-colors border border-brand-gold/40 shadow-sm"
@@ -100,7 +120,7 @@ export function SiteHeader() {
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
             aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            className="p-2 rounded-md text-brand-paper hover:text-brand-gold hover:bg-brand-green/30 focus:outline-none"
+            className="p-2.5 rounded-md text-brand-paper hover:text-brand-gold hover:bg-brand-green/30 focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <svg
               className="h-6 w-6"
@@ -131,7 +151,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={closeMenu}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                     isActive
                       ? "bg-brand-green/40 text-brand-gold"
                       : "text-brand-paper hover:bg-brand-green/20 hover:text-brand-gold"
@@ -141,11 +161,30 @@ export function SiteHeader() {
                 </Link>
               );
             })}
+
+            {status === "authenticated" && session?.user ? (
+              <Link
+                href="/app"
+                onClick={closeMenu}
+                className="block px-3 py-3 rounded-md text-base font-medium bg-brand-green/30 text-brand-gold hover:bg-brand-green/40 transition-colors"
+              >
+                Console ({session.user.name || session.user.email})
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                onClick={closeMenu}
+                className="block px-3 py-3 rounded-md text-base font-medium text-brand-paper hover:bg-brand-green/20 hover:text-brand-gold transition-colors"
+              >
+                Sign in
+              </Link>
+            )}
+
             <div className="pt-2">
               <Link
                 href="/quote"
                 onClick={closeMenu}
-                className="block text-center bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-semibold px-4 py-2.5 rounded text-base transition-colors border border-brand-gold/40 shadow-sm"
+                className="block text-center bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-semibold px-4 py-3 rounded text-base transition-colors border border-brand-gold/40 shadow-sm"
               >
                 Request a quotation
               </Link>
