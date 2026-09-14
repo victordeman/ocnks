@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String       @id @default(cuid())
+  name          String
+  email         String       @unique
+  phone         String?
+  role          Role         @default(CLIENT)
+  companyName   String?
+  emailVerified DateTime?
+  createdAt     DateTime     @default(now())
+  rfqs          Rfq[]        @relation("ClientRfqs")
+  assignedRfqs  Rfq[]        @relation("AssigneeRfqs")
+  events        RfqEvent[]
+  attachments   Attachment[]
+  auditLogs     AuditLog[]
+}
+
+enum Role {
+  CLIENT
+  STAFF
+  ADMIN
+}
+
+model ServiceLine {
+  id        String  @id @default(cuid())
+  slug      String  @unique
+  name      String
+  summary   String
+  details   String
+  active    Boolean @default(true)
+  sortOrder Int     @default(0)
+  rfqs      Rfq[]
+}
+
+enum RfqStatus {
+  RECEIVED
+  UNDER_REVIEW
+  QUOTED
+  AWARDED
+  DECLINED
+  CLOSED
+}
+
+model Rfq {
+  id            String       @id @default(cuid())
+  publicId      String       @unique // human-readable OGL-YYYY-####, allocated in a transaction in a later phase
+  status        RfqStatus    @default(RECEIVED)
+  serviceLineId String
+  serviceLine   ServiceLine  @relation(fields: [serviceLineId], references: [id])
+  contactName   String
+  companyName   String
+  email         String
+  phone         String
+  location      String
+  scope         String
+  desiredStart  DateTime?
+  clientUserId  String?
+  clientUser    User?        @relation("ClientRfqs", fields: [clientUserId], references: [id])
+  assigneeId    String?
+  assignee      User?        @relation("AssigneeRfqs", fields: [assigneeId], references: [id])
+  events        RfqEvent[]
+  attachments   Attachment[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([status])
+  @@index([email])
+  @@index([createdAt])
+}
+
+model RfqEvent {
+  id          String   @id @default(cuid())
+  rfqId       String
+  rfq         Rfq      @relation(fields: [rfqId], references: [id])
+  actorUserId String?
+  actor       User?    @relation(fields: [actorUserId], references: [id])
+  type        String // e.g. SUBMITTED, STATUS_CHANGED, COMMENT
+  message     String
+  createdAt   DateTime @default(now())
+
+  @@index([rfqId])
+}
+
+model Attachment {
+  id           String   @id @default(cuid())
+  rfqId        String
+  rfq          Rfq      @relation(fields: [rfqId], references: [id])
+  fileName     String
+  contentType  String
+  size         Int
+  storageKey   String
+  uploadedById String?
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id])
+  createdAt    DateTime @default(now())
+
+  @@index([rfqId])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?
+  actor       User?    @relation(fields: [actorUserId], references: [id])
+  action      String
+  entity      String
+  entityId    String
+  meta        Json?
+  createdAt   DateTime @default(now())
+
+  @@index([entity, entityId])
+}

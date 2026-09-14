@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f7f5;
+  --foreground: #063d1f;
+  --brand-green: #0d7a3f;
+  --brand-forest: #063d1f;
+  --brand-teal: #146c7a;
+  --brand-gold: #c4a35a;
+  --brand-paper: #f4f7f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-green: var(--brand-green);
+  --color-brand-forest: var(--brand-forest);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-paper: var(--brand-paper);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+*:focus-visible {
+  outline: 2px solid #0d7a3f;
+  outline-offset: 2px;
+}
