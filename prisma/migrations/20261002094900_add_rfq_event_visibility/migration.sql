@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "RfqEvent" ADD COLUMN     "visibility" TEXT NOT NULL DEFAULT 'CLIENT_VISIBLE';
