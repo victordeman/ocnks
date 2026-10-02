@@ -36,10 +36,20 @@ Follow these steps to run the application locally:
    ```
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Vercel Setup
+## Deployment (Vercel)
+
 1. Import repository into Vercel.
-2. Configure environment variables in project settings (copy keys from `.env.example`).
-3. Set build command to `npx prisma migrate deploy && next build` (or run migrations via CI/CD before deployment).
+2. Build command is `prisma generate && next build` (configured in `package.json` scripts; Vercel should use `npm run build`).
+3. Required environment variables for Preview and Production:
+   - `DATABASE_URL`
+   - `AUTH_SECRET`
+   - `AUTH_URL`
+4. Optional environment variables:
+   - `EMAIL_FROM`
+   - `RESEND_API_KEY`
+   - `ADMIN_BOOTSTRAP_EMAIL`
+   - `BLOB_READ_WRITE_TOKEN`
+5. After the first successful deploy, run migrations against the production database using `prisma migrate deploy` (do not run `migrate dev` on production).
 
 ## Scripts Table
 

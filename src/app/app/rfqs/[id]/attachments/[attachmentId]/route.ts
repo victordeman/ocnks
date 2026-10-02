@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 import { getCurrentSession, rfqWhereForRole } from "@/lib/auth/session";
 import { db } from "@/lib/db";
 import { getDownloadInfo } from "@/lib/storage";
