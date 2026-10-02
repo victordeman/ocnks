@@ -140,6 +140,7 @@ model RfqEvent {
   actor       User?    @relation(fields: [actorUserId], references: [id])
   type        String // e.g. SUBMITTED, STATUS_CHANGED, COMMENT
   message     String
+  visibility  String   @default("CLIENT_VISIBLE")
   createdAt   DateTime @default(now())
 
   @@index([rfqId])
