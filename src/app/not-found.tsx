@@ -11,14 +11,15 @@ export default function NotFound() {
       />
 
       <Section bg="paper">
-        <div className="max-w-md mx-auto bg-white p-8 rounded-lg border border-brand-forest/10 shadow-sm text-center space-y-4">
+        <div className="border-brand-forest/10 mx-auto max-w-md space-y-4 rounded-lg border bg-white p-8 text-center shadow-sm">
           <p className="text-brand-forest/80 text-base">
-            Please check the URL or navigate back to the home page to explore our services and company information.
+            Please check the URL or navigate back to the home page to explore
+            our services and company information.
           </p>
           <div className="pt-2">
             <Link
               href="/"
-              className="inline-block bg-brand-green text-brand-paper hover:bg-brand-forest font-semibold px-6 py-2.5 rounded text-sm transition-colors"
+              className="bg-brand-green text-brand-paper hover:bg-brand-forest inline-block rounded px-6 py-2.5 text-sm font-semibold transition-colors"
             >
               Return Home
             </Link>

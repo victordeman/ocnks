@@ -9,19 +9,19 @@ export function PageHeader({ title, intro, theme = "green" }: PageHeaderProps) {
 
   return (
     <header
-      className={`py-12 px-4 sm:px-6 lg:px-8 border-b ${
+      className={`border-b px-4 py-12 sm:px-6 lg:px-8 ${
         isGreen
           ? "bg-brand-forest text-brand-paper border-brand-green/20"
-          : "bg-white text-brand-forest border-brand-forest/10"
+          : "text-brand-forest border-brand-forest/10 bg-white"
       }`}
     >
-      <div className="max-w-7xl mx-auto space-y-3">
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+      <div className="mx-auto max-w-7xl space-y-3">
+        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
           {title}
         </h1>
         {intro && (
           <p
-            className={`text-lg sm:text-xl max-w-3xl leading-relaxed ${
+            className={`max-w-3xl text-lg leading-relaxed sm:text-xl ${
               isGreen ? "text-brand-paper/90" : "text-brand-forest/80"
             }`}
           >

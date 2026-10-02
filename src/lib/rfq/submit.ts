@@ -18,7 +18,10 @@ const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 // In-memory idempotency store: key -> { result, expiresAt }
 // NOTE: On Vercel serverless runtime, in-memory Map is per-instance. If a retried submission lands on a different instance,
 // it falls through to DB transaction. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN for global idempotency.
-const idempotencyMap = new Map<string, { publicId: string; expiresAt: number }>();
+const idempotencyMap = new Map<
+  string,
+  { publicId: string; expiresAt: number }
+>();
 
 let hasWarnedInMemory = false;
 
@@ -49,7 +52,10 @@ async function checkRateLimit(ip: string): Promise<boolean> {
         }
       }
     } catch (e) {
-      console.error("Upstash rate limit check failed, falling back to in-memory:", e);
+      console.error(
+        "Upstash rate limit check failed, falling back to in-memory:",
+        e
+      );
     }
   }
 
@@ -94,7 +100,10 @@ async function getIdempotentResult(key: string): Promise<string | null> {
         if (data.result) return data.result;
       }
     } catch (e) {
-      console.error("Upstash idempotency read failed, falling back to in-memory:", e);
+      console.error(
+        "Upstash idempotency read failed, falling back to in-memory:",
+        e
+      );
     }
   }
 
@@ -110,7 +119,10 @@ async function getIdempotentResult(key: string): Promise<string | null> {
   return null;
 }
 
-async function setIdempotentResult(key: string, publicId: string): Promise<void> {
+async function setIdempotentResult(
+  key: string,
+  publicId: string
+): Promise<void> {
   if (!key) return;
 
   const url = process.env.UPSTASH_REDIS_REST_URL;
@@ -141,7 +153,10 @@ export async function submitRfqAction(
   let rawIp = "127.0.0.1";
   try {
     const reqHeaders = await headers();
-    rawIp = reqHeaders.get("x-forwarded-for") || reqHeaders.get("x-real-ip") || "127.0.0.1";
+    rawIp =
+      reqHeaders.get("x-forwarded-for") ||
+      reqHeaders.get("x-real-ip") ||
+      "127.0.0.1";
   } catch {
     rawIp = "127.0.0.1";
   }
@@ -151,7 +166,8 @@ export async function submitRfqAction(
   if (!allowed) {
     return {
       ok: false,
-      error: "Too many requests — please try again later or contact us directly",
+      error:
+        "Too many requests — please try again later or contact us directly",
     };
   }
 
@@ -196,58 +212,68 @@ export async function submitRfqAction(
   const currentYear = new Date().getFullYear();
 
   try {
-    const { publicId, contactName, companyName, email, phone, location, scope, desiredStart } =
-      await db.$transaction(async (tx) => {
-        const counter = await tx.rfqCounter.upsert({
-          where: { year: currentYear },
-          update: { last: { increment: 1 } },
-          create: { year: currentYear, last: 1 },
-        });
-
-        const paddedSeq = String(counter.last).padStart(4, "0");
-        const generatedPublicId = `OGL-${currentYear}-${paddedSeq}`;
-
-        const existingUser = await tx.user.findUnique({
-          where: { email: input.email },
-          select: { id: true },
-        });
-
-        const parsedStartDate = input.desiredStart ? new Date(input.desiredStart) : null;
-
-        const newRfq = await tx.rfq.create({
-          data: {
-            publicId: generatedPublicId,
-            serviceLineId: serviceLine.id,
-            contactName: input.contactName,
-            companyName: input.companyName,
-            email: input.email,
-            phone: input.phone,
-            location: input.location,
-            scope: input.scope,
-            desiredStart: parsedStartDate,
-            clientUserId: existingUser ? existingUser.id : null,
-          },
-        });
-
-        await tx.rfqEvent.create({
-          data: {
-            rfqId: newRfq.id,
-            type: "SUBMITTED",
-            message: `RFQ received from ${input.contactName} (${input.companyName})`,
-          },
-        });
-
-        return {
-          publicId: newRfq.publicId,
-          contactName: newRfq.contactName,
-          companyName: newRfq.companyName,
-          email: newRfq.email,
-          phone: newRfq.phone,
-          location: newRfq.location,
-          scope: newRfq.scope,
-          desiredStart: input.desiredStart,
-        };
+    const {
+      publicId,
+      contactName,
+      companyName,
+      email,
+      phone,
+      location,
+      scope,
+      desiredStart,
+    } = await db.$transaction(async (tx) => {
+      const counter = await tx.rfqCounter.upsert({
+        where: { year: currentYear },
+        update: { last: { increment: 1 } },
+        create: { year: currentYear, last: 1 },
       });
+
+      const paddedSeq = String(counter.last).padStart(4, "0");
+      const generatedPublicId = `OGL-${currentYear}-${paddedSeq}`;
+
+      const existingUser = await tx.user.findUnique({
+        where: { email: input.email },
+        select: { id: true },
+      });
+
+      const parsedStartDate = input.desiredStart
+        ? new Date(input.desiredStart)
+        : null;
+
+      const newRfq = await tx.rfq.create({
+        data: {
+          publicId: generatedPublicId,
+          serviceLineId: serviceLine.id,
+          contactName: input.contactName,
+          companyName: input.companyName,
+          email: input.email,
+          phone: input.phone,
+          location: input.location,
+          scope: input.scope,
+          desiredStart: parsedStartDate,
+          clientUserId: existingUser ? existingUser.id : null,
+        },
+      });
+
+      await tx.rfqEvent.create({
+        data: {
+          rfqId: newRfq.id,
+          type: "SUBMITTED",
+          message: `RFQ received from ${input.contactName} (${input.companyName})`,
+        },
+      });
+
+      return {
+        publicId: newRfq.publicId,
+        contactName: newRfq.contactName,
+        companyName: newRfq.companyName,
+        email: newRfq.email,
+        phone: newRfq.phone,
+        location: newRfq.location,
+        scope: newRfq.scope,
+        desiredStart: input.desiredStart,
+      };
+    });
 
     // 6. Cache result for idempotency key
     if (idempotencyKey) {
@@ -274,7 +300,8 @@ export async function submitRfqAction(
     console.error("RFQ submission transaction failed:", err);
     return {
       ok: false,
-      error: "An unexpected error occurred while processing your request. Please try again or contact us.",
+      error:
+        "An unexpected error occurred while processing your request. Please try again or contact us.",
     };
   }
 }

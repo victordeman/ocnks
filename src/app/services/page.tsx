@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Explore OCNKS GLOBAL LTD's service lines: supplies, procurement, civil, electrical, mechanical engineering, support services, manpower development, general contract, and specialist technical services.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ServicesPage() {
   const serviceLines = await db.serviceLine.findMany({

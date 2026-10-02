@@ -10,8 +10,7 @@ import { isStorageConfigured, put } from "@/lib/storage";
 import { RfqStatus, Role } from "@prisma/client";
 
 export type ActionResult<T = unknown> =
-  | { ok: true; data?: T }
-  | { ok: false; code?: string; error: string };
+  { ok: true; data?: T } | { ok: false; code?: string; error: string };
 
 function safeRevalidatePath(pathString: string) {
   try {
@@ -74,7 +73,10 @@ export async function assignRfqAction(
       !assigneeUser ||
       (assigneeUser.role !== Role.STAFF && assigneeUser.role !== Role.ADMIN)
     ) {
-      return { ok: false, error: "Assignee must be a valid Staff or Admin user" };
+      return {
+        ok: false,
+        error: "Assignee must be a valid Staff or Admin user",
+      };
     }
     newAssigneeId = assigneeUser.id;
   }
@@ -105,7 +107,10 @@ export async function assignRfqAction(
     return { ok: true };
   } catch (err) {
     console.error("Failed to assign RFQ:", err);
-    return { ok: false, error: "An unexpected error occurred while assigning the RFQ" };
+    return {
+      ok: false,
+      error: "An unexpected error occurred while assigning the RFQ",
+    };
   }
 }
 
@@ -163,7 +168,10 @@ export async function updateStatusAction(
   } else if (targetStatus === RfqStatus.DECLINED) {
     const trimmedReason = reason ? reason.trim() : "";
     if (trimmedReason.length > 500) {
-      return { ok: false, error: "Decline reason must not exceed 500 characters" };
+      return {
+        ok: false,
+        error: "Decline reason must not exceed 500 characters",
+      };
     }
     eventMessage = trimmedReason ? `Declined — ${trimmedReason}` : "Declined";
   } else if (targetStatus === RfqStatus.CLOSED) {
@@ -206,7 +214,10 @@ export async function updateStatusAction(
     return { ok: true };
   } catch (err) {
     console.error("Failed to update status:", err);
-    return { ok: false, error: "An unexpected error occurred while updating RFQ status" };
+    return {
+      ok: false,
+      error: "An unexpected error occurred while updating RFQ status",
+    };
   }
 }
 
@@ -228,7 +239,10 @@ export async function addCommentAction(
   // 2. Trim and validate body length (1–2000 chars)
   const trimmedBody = (body || "").trim();
   if (trimmedBody.length < 1 || trimmedBody.length > 2000) {
-    return { ok: false, error: "Comment body must be between 1 and 2,000 characters" };
+    return {
+      ok: false,
+      error: "Comment body must be between 1 and 2,000 characters",
+    };
   }
 
   // 3. Role check & Scope check
@@ -238,11 +252,15 @@ export async function addCommentAction(
   if (role === Role.CLIENT) {
     // Critical security check: CLIENT calling with INTERNAL visibility is rejected
     if (requestedVisibility === "INTERNAL") {
-      return { ok: false, error: "Unauthorized — clients cannot post internal comments" };
+      return {
+        ok: false,
+        error: "Unauthorized — clients cannot post internal comments",
+      };
     }
     finalVisibility = "CLIENT_VISIBLE";
   } else if (role === Role.STAFF || role === Role.ADMIN) {
-    finalVisibility = requestedVisibility === "INTERNAL" ? "INTERNAL" : "CLIENT_VISIBLE";
+    finalVisibility =
+      requestedVisibility === "INTERNAL" ? "INTERNAL" : "CLIENT_VISIBLE";
   } else {
     return { ok: false, error: "Unauthorized role" };
   }
@@ -275,7 +293,10 @@ export async function addCommentAction(
     return { ok: true };
   } catch (err) {
     console.error("Failed to add comment:", err);
-    return { ok: false, error: "An unexpected error occurred while adding comment" };
+    return {
+      ok: false,
+      error: "An unexpected error occurred while adding comment",
+    };
   }
 }
 
@@ -297,7 +318,8 @@ export async function uploadAttachmentAction(
   if (!isStorageConfigured()) {
     return {
       ok: false,
-      error: "File storage is not configured — send files to ocnksglobal@gmail.com instead",
+      error:
+        "File storage is not configured — send files to ocnksglobal@gmail.com instead",
     };
   }
 

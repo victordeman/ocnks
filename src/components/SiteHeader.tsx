@@ -51,34 +51,36 @@ export function SiteHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-forest text-brand-paper shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="bg-brand-forest text-brand-paper sticky top-0 z-50 shadow-md">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
           onClick={closeMenu}
-          className="flex items-center gap-3 font-semibold tracking-wider hover:opacity-95 transition-opacity focus-visible:outline-white"
+          className="flex items-center gap-3 font-semibold tracking-wider transition-opacity hover:opacity-95 focus-visible:outline-white"
         >
           <div
             aria-hidden="true"
-            className="w-9 h-9 rounded bg-brand-green flex items-center justify-center font-bold text-brand-gold text-sm shadow-sm border border-brand-gold/30"
+            className="bg-brand-green text-brand-gold border-brand-gold/30 flex h-9 w-9 items-center justify-center rounded border text-sm font-bold shadow-sm"
           >
             OG
           </div>
-          <span className="text-lg text-brand-paper font-bold tracking-tight">
+          <span className="text-brand-paper text-lg font-bold tracking-tight">
             OCNKS GLOBAL
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden items-center space-x-6 md:flex">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-brand-gold ${
-                  isActive ? "text-brand-gold underline underline-offset-4" : "text-brand-paper/90"
+                className={`hover:text-brand-gold text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-brand-gold underline underline-offset-4"
+                    : "text-brand-paper/90"
                 }`}
               >
                 {item.name}
@@ -89,15 +91,17 @@ export function SiteHeader() {
           {status === "authenticated" && session?.user ? (
             <Link
               href="/app"
-              className="flex items-center gap-2 text-sm font-medium bg-brand-green/30 hover:bg-brand-green/50 px-3 py-2 rounded text-brand-gold border border-brand-gold/30 transition-colors"
+              className="bg-brand-green/30 hover:bg-brand-green/50 text-brand-gold border-brand-gold/30 flex items-center gap-2 rounded border px-3 py-2 text-sm font-medium transition-colors"
             >
               <span>Console</span>
-              <span className="text-brand-paper/80 font-normal">({session.user.name || session.user.email})</span>
+              <span className="text-brand-paper/80 font-normal">
+                ({session.user.name || session.user.email})
+              </span>
             </Link>
           ) : (
             <Link
               href="/login"
-              className="text-sm font-medium transition-colors hover:text-brand-gold text-brand-paper/90 px-3 py-2"
+              className="hover:text-brand-gold text-brand-paper/90 px-3 py-2 text-sm font-medium transition-colors"
             >
               Sign in
             </Link>
@@ -105,22 +109,24 @@ export function SiteHeader() {
 
           <Link
             href="/quote"
-            className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-semibold px-4 py-2 rounded text-sm transition-colors border border-brand-gold/40 shadow-sm"
+            className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 border-brand-gold/40 rounded border px-4 py-2 text-sm font-semibold shadow-sm transition-colors"
           >
             Request a quotation
           </Link>
         </nav>
 
         {/* Mobile menu button */}
-        <div className="flex md:hidden items-center">
+        <div className="flex items-center md:hidden">
           <button
             ref={toggleButtonRef}
             type="button"
             onClick={toggleMenu}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
-            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            className="p-2.5 rounded-md text-brand-paper hover:text-brand-gold hover:bg-brand-green/30 focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center"
+            aria-label={
+              mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"
+            }
+            className="text-brand-paper hover:text-brand-gold hover:bg-brand-green/30 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2.5 focus:outline-none"
           >
             <svg
               className="h-6 w-6"
@@ -131,9 +137,17 @@ export function SiteHeader() {
               aria-hidden="true"
             >
               {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </button>
@@ -142,8 +156,11 @@ export function SiteHeader() {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div id="mobile-menu" className="md:hidden border-t border-brand-paper/10 bg-brand-forest">
-          <div className="px-4 pt-3 pb-6 space-y-3">
+        <div
+          id="mobile-menu"
+          className="border-brand-paper/10 bg-brand-forest border-t md:hidden"
+        >
+          <div className="space-y-3 px-4 pt-3 pb-6">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -151,7 +168,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={closeMenu}
-                  className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
+                  className={`block rounded-md px-3 py-3 text-base font-medium transition-colors ${
                     isActive
                       ? "bg-brand-green/40 text-brand-gold"
                       : "text-brand-paper hover:bg-brand-green/20 hover:text-brand-gold"
@@ -166,7 +183,7 @@ export function SiteHeader() {
               <Link
                 href="/app"
                 onClick={closeMenu}
-                className="block px-3 py-3 rounded-md text-base font-medium bg-brand-green/30 text-brand-gold hover:bg-brand-green/40 transition-colors"
+                className="bg-brand-green/30 text-brand-gold hover:bg-brand-green/40 block rounded-md px-3 py-3 text-base font-medium transition-colors"
               >
                 Console ({session.user.name || session.user.email})
               </Link>
@@ -174,7 +191,7 @@ export function SiteHeader() {
               <Link
                 href="/login"
                 onClick={closeMenu}
-                className="block px-3 py-3 rounded-md text-base font-medium text-brand-paper hover:bg-brand-green/20 hover:text-brand-gold transition-colors"
+                className="text-brand-paper hover:bg-brand-green/20 hover:text-brand-gold block rounded-md px-3 py-3 text-base font-medium transition-colors"
               >
                 Sign in
               </Link>
@@ -184,7 +201,7 @@ export function SiteHeader() {
               <Link
                 href="/quote"
                 onClick={closeMenu}
-                className="block text-center bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-semibold px-4 py-3 rounded text-base transition-colors border border-brand-gold/40 shadow-sm"
+                className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 border-brand-gold/40 block rounded border px-4 py-3 text-center text-base font-semibold shadow-sm transition-colors"
               >
                 Request a quotation
               </Link>

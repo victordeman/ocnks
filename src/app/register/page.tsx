@@ -69,25 +69,30 @@ export default function RegisterPage() {
         }
       }
     } catch {
-      setGeneralError("An unexpected error occurred during registration. Please try again.");
+      setGeneralError(
+        "An unexpected error occurred during registration. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-brand-paper">
-      <div className="w-full max-w-lg bg-white p-6 sm:p-8 rounded-lg shadow-sm border border-brand-green/20">
+    <div className="bg-brand-paper flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+      <div className="border-brand-green/20 w-full max-w-lg rounded-lg border bg-white p-6 shadow-sm sm:p-8">
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-brand-forest">Register Company Account</h1>
-          <p className="text-sm text-brand-forest/70 mt-1">
-            Create an account for your organization to submit and track requests for quotation
+          <h1 className="text-brand-forest text-2xl font-bold">
+            Register Company Account
+          </h1>
+          <p className="text-brand-forest/70 mt-1 text-sm">
+            Create an account for your organization to submit and track requests
+            for quotation
           </p>
         </div>
 
         <div aria-live="polite" className="mb-4">
           {generalError && (
-            <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded text-sm font-medium">
+            <div className="rounded border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-800">
               {generalError}
             </div>
           )}
@@ -95,7 +100,10 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="reg-name" className="block text-sm font-medium text-brand-forest mb-1">
+            <label
+              htmlFor="reg-name"
+              className="text-brand-forest mb-1 block text-sm font-medium"
+            >
               Full Name <span className="text-red-600">*</span>
             </label>
             <input
@@ -106,15 +114,18 @@ export default function RegisterPage() {
               value={formData.name}
               onChange={handleChange}
               placeholder="Amina Bello"
-              className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+              className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
             />
             {fieldErrors.name?.[0] && (
-              <p className="text-xs text-red-600 mt-1">{fieldErrors.name[0]}</p>
+              <p className="mt-1 text-xs text-red-600">{fieldErrors.name[0]}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="reg-company" className="block text-sm font-medium text-brand-forest mb-1">
+            <label
+              htmlFor="reg-company"
+              className="text-brand-forest mb-1 block text-sm font-medium"
+            >
               Company Name <span className="text-red-600">*</span>
             </label>
             <input
@@ -125,16 +136,21 @@ export default function RegisterPage() {
               value={formData.companyName}
               onChange={handleChange}
               placeholder="Niger Delta Energy Services Ltd"
-              className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+              className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
             />
             {fieldErrors.companyName?.[0] && (
-              <p className="text-xs text-red-600 mt-1">{fieldErrors.companyName[0]}</p>
+              <p className="mt-1 text-xs text-red-600">
+                {fieldErrors.companyName[0]}
+              </p>
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="reg-email" className="block text-sm font-medium text-brand-forest mb-1">
+              <label
+                htmlFor="reg-email"
+                className="text-brand-forest mb-1 block text-sm font-medium"
+              >
                 Corporate Email <span className="text-red-600">*</span>
               </label>
               <input
@@ -146,15 +162,20 @@ export default function RegisterPage() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="amina@company.com"
-                className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+                className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
               />
               {fieldErrors.email?.[0] && (
-                <p className="text-xs text-red-600 mt-1">{fieldErrors.email[0]}</p>
+                <p className="mt-1 text-xs text-red-600">
+                  {fieldErrors.email[0]}
+                </p>
               )}
             </div>
 
             <div>
-              <label htmlFor="reg-phone" className="block text-sm font-medium text-brand-forest mb-1">
+              <label
+                htmlFor="reg-phone"
+                className="text-brand-forest mb-1 block text-sm font-medium"
+              >
                 Phone Number (Optional)
               </label>
               <input
@@ -164,16 +185,21 @@ export default function RegisterPage() {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="+234 800 000 0000"
-                className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+                className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
               />
               {fieldErrors.phone?.[0] && (
-                <p className="text-xs text-red-600 mt-1">{fieldErrors.phone[0]}</p>
+                <p className="mt-1 text-xs text-red-600">
+                  {fieldErrors.phone[0]}
+                </p>
               )}
             </div>
           </div>
 
           <div>
-            <label htmlFor="reg-password" className="block text-sm font-medium text-brand-forest mb-1">
+            <label
+              htmlFor="reg-password"
+              className="text-brand-forest mb-1 block text-sm font-medium"
+            >
               Password <span className="text-red-600">*</span>
             </label>
             <input
@@ -185,15 +211,20 @@ export default function RegisterPage() {
               value={formData.password}
               onChange={handleChange}
               placeholder="At least 10 characters"
-              className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+              className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
             />
             {fieldErrors.password?.[0] && (
-              <p className="text-xs text-red-600 mt-1">{fieldErrors.password[0]}</p>
+              <p className="mt-1 text-xs text-red-600">
+                {fieldErrors.password[0]}
+              </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="reg-confirmPassword" className="block text-sm font-medium text-brand-forest mb-1">
+            <label
+              htmlFor="reg-confirmPassword"
+              className="text-brand-forest mb-1 block text-sm font-medium"
+            >
               Confirm Password <span className="text-red-600">*</span>
             </label>
             <input
@@ -205,28 +236,30 @@ export default function RegisterPage() {
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="Re-enter password"
-              className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+              className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
             />
             {fieldErrors.confirmPassword?.[0] && (
-              <p className="text-xs text-red-600 mt-1">{fieldErrors.confirmPassword[0]}</p>
+              <p className="mt-1 text-xs text-red-600">
+                {fieldErrors.confirmPassword[0]}
+              </p>
             )}
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 bg-brand-green text-white font-semibold rounded-md hover:bg-brand-forest transition-colors focus:outline-none focus:ring-2 focus:ring-brand-green focus:ring-offset-2 disabled:opacity-50 min-h-[44px] mt-2"
+            className="bg-brand-green hover:bg-brand-forest focus:ring-brand-green mt-2 min-h-[44px] w-full rounded-md px-4 py-3 font-semibold text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
           >
             {isSubmitting ? "Creating account..." : "Register account"}
           </button>
         </form>
 
-        <div className="mt-6 text-center pt-4 border-t border-brand-green/10">
-          <p className="text-sm text-brand-forest/80">
+        <div className="border-brand-green/10 mt-6 border-t pt-4 text-center">
+          <p className="text-brand-forest/80 text-sm">
             Already have an account?{" "}
             <Link
               href="/login"
-              className="font-semibold text-brand-green hover:underline underline-offset-2"
+              className="text-brand-green font-semibold underline-offset-2 hover:underline"
             >
               Sign in
             </Link>

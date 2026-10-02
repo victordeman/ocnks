@@ -40,16 +40,12 @@ Follow these steps to run the application locally:
 
 1. Import repository into Vercel.
 2. Build command is `prisma generate && next build` (configured in `package.json` scripts; Vercel should use `npm run build`).
-3. Required environment variables for Preview and Production:
-   - `DATABASE_URL`
+3. Vercel Preview and Production must have these environment variables set before deploy, or page-data collection can still fail:
+   - `DATABASE_URL` (Postgres connection string; required)
    - `AUTH_SECRET`
-   - `AUTH_URL`
-4. Optional environment variables:
-   - `EMAIL_FROM`
-   - `RESEND_API_KEY`
-   - `ADMIN_BOOTSTRAP_EMAIL`
-   - `BLOB_READ_WRITE_TOKEN`
-5. After the first successful deploy, run migrations against the production database using `prisma migrate deploy` (do not run `migrate dev` on production).
+   - `AUTH_URL` (the deployment URL)
+   - optional: `EMAIL_FROM`, `RESEND_API_KEY`, `ADMIN_BOOTSTRAP_EMAIL`, `BLOB_READ_WRITE_TOKEN`
+4. After the first successful deploy, run migrations against the production database using `prisma migrate deploy` (do not run `migrate dev` on production).
 
 ## Scripts Table
 

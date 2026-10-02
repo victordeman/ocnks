@@ -48,18 +48,18 @@ export function CommentComposer({ rfqId, role }: CommentComposerProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-4 rounded-lg border border-brand-green/20 shadow-sm space-y-3"
+      className="border-brand-green/20 space-y-3 rounded-lg border bg-white p-4 shadow-sm"
     >
       <div className="flex items-center justify-between">
         <label
           htmlFor="comment-body"
-          className="text-xs font-bold uppercase tracking-wider text-brand-forest/70"
+          className="text-brand-forest/70 text-xs font-bold tracking-wider uppercase"
         >
           Add Comment
         </label>
         {isStaffOrAdmin && (
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-brand-forest/70">
+            <span className="text-brand-forest/70 text-xs font-semibold">
               Visibility:
             </span>
             <select
@@ -67,7 +67,7 @@ export function CommentComposer({ rfqId, role }: CommentComposerProps) {
               onChange={(e) =>
                 setVisibility(e.target.value as "INTERNAL" | "CLIENT_VISIBLE")
               }
-              className="px-2 py-1 text-xs border border-brand-green/30 rounded bg-white font-medium focus:outline-none focus:ring-2 focus:ring-brand-green min-h-[36px]"
+              className="border-brand-green/30 focus:ring-brand-green min-h-[36px] rounded border bg-white px-2 py-1 text-xs font-medium focus:ring-2 focus:outline-none"
             >
               <option value="INTERNAL">Internal (Staff Only)</option>
               <option value="CLIENT_VISIBLE">Client Visible</option>
@@ -90,16 +90,16 @@ export function CommentComposer({ rfqId, role }: CommentComposerProps) {
                 : "Write a message visible to the client..."
               : "Write a message to OCNKS Global project staff..."
           }
-          className="w-full p-3 border border-brand-green/30 rounded text-sm text-brand-forest focus:outline-none focus:ring-2 focus:ring-brand-green font-sans"
+          className="border-brand-green/30 text-brand-forest focus:ring-brand-green w-full rounded border p-3 font-sans text-sm focus:ring-2 focus:outline-none"
         />
-        <div className="flex items-center justify-between mt-1 text-xs text-brand-forest/60">
+        <div className="text-brand-forest/60 mt-1 flex items-center justify-between text-xs">
           <span>
             {isStaffOrAdmin && visibility === "INTERNAL" ? (
               <span className="font-semibold text-amber-700">
                 🔒 Visible only to staff
               </span>
             ) : (
-              <span className="font-semibold text-brand-green">
+              <span className="text-brand-green font-semibold">
                 🌐 Visible to client and staff
               </span>
             )}
@@ -112,19 +112,25 @@ export function CommentComposer({ rfqId, role }: CommentComposerProps) {
         <button
           type="submit"
           disabled={isPending || body.trim().length === 0}
-          className="px-4 py-2 bg-brand-green text-white font-semibold text-xs rounded hover:bg-brand-forest transition-colors min-h-[44px] flex items-center justify-center disabled:opacity-50"
+          className="bg-brand-green hover:bg-brand-forest flex min-h-[44px] items-center justify-center rounded px-4 py-2 text-xs font-semibold text-white transition-colors disabled:opacity-50"
         >
           {isPending ? "Posting..." : "Add comment"}
         </button>
       </div>
 
       {errorMessage && (
-        <p className="text-xs font-semibold text-red-600 bg-red-50 p-2 rounded border border-red-200" aria-live="polite">
+        <p
+          className="rounded border border-red-200 bg-red-50 p-2 text-xs font-semibold text-red-600"
+          aria-live="polite"
+        >
           {errorMessage}
         </p>
       )}
       {successMessage && (
-        <p className="text-xs font-semibold text-emerald-700 bg-emerald-50 p-2 rounded border border-emerald-200" aria-live="polite">
+        <p
+          className="rounded border border-emerald-200 bg-emerald-50 p-2 text-xs font-semibold text-emerald-700"
+          aria-live="polite"
+        >
           {successMessage}
         </p>
       )}

@@ -15,7 +15,10 @@ export async function checkAuthRateLimit(
   const ipRecord = ipLimitMap.get(ip);
   if (ipRecord && now < ipRecord.resetAt) {
     if (ipRecord.count >= 20) {
-      return { allowed: false, reason: "Too many attempts — try again later or use email sign-in" };
+      return {
+        allowed: false,
+        reason: "Too many attempts — try again later or use email sign-in",
+      };
     }
   }
 
@@ -23,7 +26,10 @@ export async function checkAuthRateLimit(
   const emailRecord = emailLimitMap.get(normalizedEmail);
   if (emailRecord && now < emailRecord.resetAt) {
     if (emailRecord.count >= 5) {
-      return { allowed: false, reason: "Too many attempts — try again later or use email sign-in" };
+      return {
+        allowed: false,
+        reason: "Too many attempts — try again later or use email sign-in",
+      };
     }
   }
 

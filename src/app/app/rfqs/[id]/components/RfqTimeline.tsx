@@ -22,17 +22,17 @@ export function RfqTimeline({ events, role }: RfqTimelineProps) {
   const isStaffOrAdmin = role === Role.STAFF || role === Role.ADMIN;
 
   return (
-    <div className="bg-white p-4 rounded-lg border border-brand-green/20 shadow-sm space-y-4">
-      <h3 className="text-xs font-bold uppercase tracking-wider text-brand-forest/70">
+    <div className="border-brand-green/20 space-y-4 rounded-lg border bg-white p-4 shadow-sm">
+      <h3 className="text-brand-forest/70 text-xs font-bold tracking-wider uppercase">
         Request Timeline & Communication Log
       </h3>
 
       {events.length === 0 ? (
-        <p className="text-xs text-brand-forest/60 italic py-2">
+        <p className="text-brand-forest/60 py-2 text-xs italic">
           No events recorded.
         </p>
       ) : (
-        <div className="relative border-l-2 border-brand-green/20 ml-3 pl-4 space-y-6">
+        <div className="border-brand-green/20 relative ml-3 space-y-6 border-l-2 pl-4">
           {events.map((event) => {
             const isInternal = event.visibility === "INTERNAL";
             const actorName = event.actor
@@ -58,28 +58,28 @@ export function RfqTimeline({ events, role }: RfqTimelineProps) {
             }
 
             return (
-              <div key={event.id} className="relative group">
+              <div key={event.id} className="group relative">
                 {/* Timeline dot marker */}
                 <div
-                  className={`absolute -left-[23px] top-1.5 w-3 h-3 rounded-full ${iconBg} ring-4 ring-white`}
+                  className={`absolute top-1.5 -left-[23px] h-3 w-3 rounded-full ${iconBg} ring-4 ring-white`}
                 />
 
                 <div
-                  className={`p-3 rounded-md border text-xs space-y-1.5 ${
+                  className={`space-y-1.5 rounded-md border p-3 text-xs ${
                     isInternal
-                      ? "bg-amber-50/70 border-amber-300/80 text-amber-950"
+                      ? "border-amber-300/80 bg-amber-50/70 text-amber-950"
                       : "bg-brand-paper/40 border-brand-green/15 text-brand-forest"
                   }`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-brand-forest text-xs">
+                      <span className="text-brand-forest text-xs font-bold">
                         {actorName}
                       </span>
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                        className={`rounded px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase ${
                           isInternal
-                            ? "bg-amber-200 text-amber-900 border border-amber-400"
+                            ? "border border-amber-400 bg-amber-200 text-amber-900"
                             : "bg-brand-green/10 text-brand-green"
                         }`}
                       >
@@ -87,12 +87,12 @@ export function RfqTimeline({ events, role }: RfqTimelineProps) {
                       </span>
                     </div>
 
-                    <time className="text-[11px] text-brand-forest/60 font-medium">
+                    <time className="text-brand-forest/60 text-[11px] font-medium">
                       {formatDateLagos(event.createdAt)}
                     </time>
                   </div>
 
-                  <p className="text-xs leading-relaxed whitespace-pre-wrap font-sans">
+                  <p className="font-sans text-xs leading-relaxed whitespace-pre-wrap">
                     {event.message}
                   </p>
                 </div>

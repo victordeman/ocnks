@@ -19,12 +19,16 @@ export default function AboutPage() {
 
       {/* Overview */}
       <Section bg="paper">
-        <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg border border-brand-forest/10 shadow-sm space-y-4">
-          <h2 className="text-2xl font-bold text-brand-forest">
+        <div className="border-brand-forest/10 mx-auto max-w-4xl space-y-4 rounded-lg border bg-white p-8 shadow-sm">
+          <h2 className="text-brand-forest text-2xl font-bold">
             Company Overview
           </h2>
-          <p className="text-brand-forest/90 leading-relaxed text-base">
-            OCNKS GLOBAL LTD (OGL) is dedicated to delivering superior professional technical services for small-to-large projects in Nigeria. We involve our clients from the beginning, ensuring relevant, meticulous, and cost-effective delivery across all technical and procurement engagements.
+          <p className="text-brand-forest/90 text-base leading-relaxed">
+            OCNKS GLOBAL LTD (OGL) is dedicated to delivering superior
+            professional technical services for small-to-large projects in
+            Nigeria. We involve our clients from the beginning, ensuring
+            relevant, meticulous, and cost-effective delivery across all
+            technical and procurement engagements.
           </p>
         </div>
       </Section>
@@ -32,31 +36,34 @@ export default function AboutPage() {
       {/* Vision, Mission, Values */}
       <Section bg="white">
         <div className="space-y-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
               Our Vision, Mission & Values
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-brand-paper p-6 rounded-lg border border-brand-forest/10 space-y-3">
-              <h3 className="text-xl font-bold text-brand-green">Vision</h3>
-              <p className="text-sm text-brand-forest/90 leading-relaxed">
-                To be the best wholly Nigerian-owned LLC providing superior professional services.
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="bg-brand-paper border-brand-forest/10 space-y-3 rounded-lg border p-6">
+              <h3 className="text-brand-green text-xl font-bold">Vision</h3>
+              <p className="text-brand-forest/90 text-sm leading-relaxed">
+                To be the best wholly Nigerian-owned LLC providing superior
+                professional services.
               </p>
             </div>
 
-            <div className="bg-brand-paper p-6 rounded-lg border border-brand-forest/10 space-y-3">
-              <h3 className="text-xl font-bold text-brand-green">Mission</h3>
-              <p className="text-sm text-brand-forest/90 leading-relaxed">
-                To create substantial customer value via quality infrastructure solutions, delivered on time.
+            <div className="bg-brand-paper border-brand-forest/10 space-y-3 rounded-lg border p-6">
+              <h3 className="text-brand-green text-xl font-bold">Mission</h3>
+              <p className="text-brand-forest/90 text-sm leading-relaxed">
+                To create substantial customer value via quality infrastructure
+                solutions, delivered on time.
               </p>
             </div>
 
-            <div className="bg-brand-paper p-6 rounded-lg border border-brand-forest/10 space-y-3">
-              <h3 className="text-xl font-bold text-brand-green">Values</h3>
-              <p className="text-sm text-brand-forest/90 leading-relaxed">
-                Ethical, transparent, equitable, and lawful conduct in all operations and partnerships.
+            <div className="bg-brand-paper border-brand-forest/10 space-y-3 rounded-lg border p-6">
+              <h3 className="text-brand-green text-xl font-bold">Values</h3>
+              <p className="text-brand-forest/90 text-sm leading-relaxed">
+                Ethical, transparent, equitable, and lawful conduct in all
+                operations and partnerships.
               </p>
             </div>
           </div>
@@ -65,38 +72,45 @@ export default function AboutPage() {
 
       {/* Ethos & Supply Model */}
       <Section bg="paper">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white p-8 rounded-lg border border-brand-forest/10 space-y-4">
-            <h2 className="text-2xl font-bold text-brand-forest">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="border-brand-forest/10 space-y-4 rounded-lg border bg-white p-8">
+            <h2 className="text-brand-forest text-2xl font-bold">
               Ethos & Service Standards
             </h2>
-            <p className="text-brand-forest/90 leading-relaxed text-sm">
-              Our operational ethos is built on absolute confidentiality and discretion. We maintain trained, customer-friendly staff who maintain clear communication and meticulous standards on site and across project lifecycles.
+            <p className="text-brand-forest/90 text-sm leading-relaxed">
+              Our operational ethos is built on absolute confidentiality and
+              discretion. We maintain trained, customer-friendly staff who
+              maintain clear communication and meticulous standards on site and
+              across project lifecycles.
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-lg border border-brand-forest/10 space-y-4">
-            <h2 className="text-2xl font-bold text-brand-forest">
+          <div className="border-brand-forest/10 space-y-4 rounded-lg border bg-white p-8">
+            <h2 className="text-brand-forest text-2xl font-bold">
               Direct Supply Model
             </h2>
-            <p className="text-brand-forest/90 leading-relaxed text-sm">
-              We operate a direct producer/source supply model alongside vetted OEM partners. Before selection, every material and component undergoes evaluation for performance, compliance with industry standards, and system interoperability.
+            <p className="text-brand-forest/90 text-sm leading-relaxed">
+              We operate a direct producer/source supply model alongside vetted
+              OEM partners. Before selection, every material and component
+              undergoes evaluation for performance, compliance with industry
+              standards, and system interoperability.
             </p>
           </div>
         </div>
       </Section>
 
       {/* CTA */}
-      <section className="bg-brand-forest text-brand-paper py-12 px-4 text-center border-t border-brand-green/30">
-        <div className="max-w-3xl mx-auto space-y-4">
+      <section className="bg-brand-forest text-brand-paper border-brand-green/30 border-t px-4 py-12 text-center">
+        <div className="mx-auto max-w-3xl space-y-4">
           <h2 className="text-2xl font-bold">Work With OCNKS GLOBAL LTD</h2>
           <p className="text-brand-paper/90 text-sm">
-            Reach out to our team to request detailed technical proposals or quotations.
+            Reach out to our team to request detailed technical proposals or
+            quotations.
           </p>
           <div>
             <Link
               href="/quote"
-              className="inline-block bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-bold px-6 py-3 rounded text-sm transition-colors border border-brand-gold/40 shadow-sm"
+              className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 border-brand-gold/40 inline-block rounded border px-6 py-3 text-sm font-bold shadow-sm transition-colors"
             >
               Request a quotation
             </Link>
