@@ -4,7 +4,11 @@ interface SectionProps {
   bg?: "paper" | "white" | "forest";
 }
 
-export function Section({ children, className = "", bg = "paper" }: SectionProps) {
+export function Section({
+  children,
+  className = "",
+  bg = "paper",
+}: SectionProps) {
   const bgClasses = {
     paper: "bg-brand-paper text-brand-forest",
     white: "bg-white text-brand-forest",
@@ -12,8 +16,10 @@ export function Section({ children, className = "", bg = "paper" }: SectionProps
   };
 
   return (
-    <section className={`py-12 sm:py-16 px-4 sm:px-6 lg:px-8 ${bgClasses[bg]} ${className}`}>
-      <div className="max-w-7xl mx-auto">{children}</div>
+    <section
+      className={`px-4 py-12 sm:px-6 sm:py-16 lg:px-8 ${bgClasses[bg]} ${className}`}
+    >
+      <div className="mx-auto max-w-7xl">{children}</div>
     </section>
   );
 }

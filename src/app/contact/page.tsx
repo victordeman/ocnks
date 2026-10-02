@@ -36,19 +36,19 @@ export default function ContactPage() {
       />
 
       <Section bg="paper">
-        <div className="max-w-6xl mx-auto space-y-10">
+        <div className="mx-auto max-w-6xl space-y-10">
           {/* Office Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {offices.map((off) => (
               <div
                 key={off.title}
-                className="bg-white p-6 rounded-lg border border-brand-forest/10 shadow-sm space-y-3 flex flex-col justify-between"
+                className="border-brand-forest/10 flex flex-col justify-between space-y-3 rounded-lg border bg-white p-6 shadow-sm"
               >
                 <div className="space-y-3">
-                  <h2 className="text-lg font-bold text-brand-green">
+                  <h2 className="text-brand-green text-lg font-bold">
                     {off.title}
                   </h2>
-                  <address className="not-italic text-sm text-brand-forest/90 leading-relaxed">
+                  <address className="text-brand-forest/90 text-sm leading-relaxed not-italic">
                     {off.address}
                   </address>
                 </div>
@@ -57,13 +57,15 @@ export default function ContactPage() {
           </div>
 
           {/* Direct Communication Channels */}
-          <div className="bg-white p-8 rounded-lg border border-brand-forest/10 shadow-sm space-y-6 max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl font-bold text-brand-forest">
+          <div className="border-brand-forest/10 mx-auto max-w-2xl space-y-6 rounded-lg border bg-white p-8 text-center shadow-sm">
+            <h2 className="text-brand-forest text-2xl font-bold">
               Direct Contact Channels
             </h2>
             <div className="space-y-4 text-base">
               <p>
-                <span className="font-semibold text-brand-forest">Phone (All Sites):</span>{" "}
+                <span className="text-brand-forest font-semibold">
+                  Phone (All Sites):
+                </span>{" "}
                 <a
                   href="tel:+2348108690772"
                   className="text-brand-green font-bold hover:underline"
@@ -72,7 +74,7 @@ export default function ContactPage() {
                 </a>
               </p>
               <p>
-                <span className="font-semibold text-brand-forest">Email:</span>{" "}
+                <span className="text-brand-forest font-semibold">Email:</span>{" "}
                 <a
                   href="mailto:ocnksglobal@gmail.com"
                   className="text-brand-green font-bold hover:underline"
@@ -84,7 +86,7 @@ export default function ContactPage() {
             <div className="pt-2">
               <Link
                 href="/quote"
-                className="inline-block bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-bold px-6 py-3 rounded text-sm transition-colors border border-brand-gold/40 shadow-sm"
+                className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 border-brand-gold/40 inline-block rounded border px-6 py-3 text-sm font-bold shadow-sm transition-colors"
               >
                 Request a quotation
               </Link>

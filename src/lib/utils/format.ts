@@ -1,4 +1,6 @@
-export function formatDateLagos(date: Date | string | null | undefined): string {
+export function formatDateLagos(
+  date: Date | string | null | undefined
+): string {
   if (!date) return "—";
   const d = typeof date === "string" ? new Date(date) : date;
   return new Intl.DateTimeFormat("en-NG", {
@@ -11,7 +13,9 @@ export function formatDateLagos(date: Date | string | null | undefined): string 
   }).format(d);
 }
 
-export function formatDateOnlyLagos(date: Date | string | null | undefined): string {
+export function formatDateOnlyLagos(
+  date: Date | string | null | undefined
+): string {
   if (!date) return "—";
   const d = typeof date === "string" ? new Date(date) : date;
   return new Intl.DateTimeFormat("en-NG", {

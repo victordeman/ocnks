@@ -18,23 +18,28 @@ export default function QuotePage() {
       />
 
       <Section bg="paper">
-        <div className="max-w-2xl mx-auto bg-white p-8 sm:p-10 rounded-lg border border-brand-forest/10 shadow-sm space-y-6 text-center">
-          <div className="w-12 h-12 rounded-full bg-brand-green/10 text-brand-green mx-auto flex items-center justify-center font-bold text-xl">
+        <div className="border-brand-forest/10 mx-auto max-w-2xl space-y-6 rounded-lg border bg-white p-8 text-center shadow-sm sm:p-10">
+          <div className="bg-brand-green/10 text-brand-green mx-auto flex h-12 w-12 items-center justify-center rounded-full text-xl font-bold">
             OG
           </div>
 
           <div className="space-y-3">
-            <h2 className="text-2xl font-bold text-brand-forest">
+            <h2 className="text-brand-forest text-2xl font-bold">
               Quotation Portal Under Preparation
             </h2>
             <p className="text-brand-forest/80 text-sm leading-relaxed">
-              We are finalizing our online RFQ submission system to streamline your quotation workflow. In the meantime, please submit your project specifications, location, and requirements directly to our contact channels below:
+              We are finalizing our online RFQ submission system to streamline
+              your quotation workflow. In the meantime, please submit your
+              project specifications, location, and requirements directly to our
+              contact channels below:
             </p>
           </div>
 
-          <div className="bg-brand-paper p-6 rounded-lg border border-brand-forest/10 space-y-3 text-left sm:text-center">
+          <div className="bg-brand-paper border-brand-forest/10 space-y-3 rounded-lg border p-6 text-left sm:text-center">
             <p className="text-sm">
-              <strong className="font-semibold text-brand-forest">Email:</strong>{" "}
+              <strong className="text-brand-forest font-semibold">
+                Email:
+              </strong>{" "}
               <a
                 href="mailto:ocnksglobal@gmail.com"
                 className="text-brand-green font-bold hover:underline"
@@ -43,7 +48,9 @@ export default function QuotePage() {
               </a>
             </p>
             <p className="text-sm">
-              <strong className="font-semibold text-brand-forest">Phone (All Sites):</strong>{" "}
+              <strong className="text-brand-forest font-semibold">
+                Phone (All Sites):
+              </strong>{" "}
               <a
                 href="tel:+2348108690772"
                 className="text-brand-green font-bold hover:underline"
@@ -56,7 +63,7 @@ export default function QuotePage() {
           <div className="pt-2">
             <Link
               href="/services"
-              className="inline-block bg-brand-green text-brand-paper hover:bg-brand-forest font-semibold px-6 py-2.5 rounded text-sm transition-colors"
+              className="bg-brand-green text-brand-paper hover:bg-brand-forest inline-block rounded px-6 py-2.5 text-sm font-semibold transition-colors"
             >
               Browse Service Catalogue
             </Link>

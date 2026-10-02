@@ -45,17 +45,17 @@ export default function MarketsPage() {
       />
 
       <Section bg="paper">
-        <div className="space-y-8 max-w-4xl mx-auto">
+        <div className="mx-auto max-w-4xl space-y-8">
           {marketDetails.map((market) => (
             <div
               key={market.id}
               id={market.id}
-              className="bg-white p-8 rounded-lg border border-brand-forest/10 shadow-sm space-y-4"
+              className="border-brand-forest/10 space-y-4 rounded-lg border bg-white p-8 shadow-sm"
             >
-              <h2 className="text-2xl font-bold text-brand-forest">
+              <h2 className="text-brand-forest text-2xl font-bold">
                 {market.name}
               </h2>
-              <p className="text-brand-forest/90 leading-relaxed text-base">
+              <p className="text-brand-forest/90 text-base leading-relaxed">
                 {market.description}
               </p>
             </div>
@@ -63,16 +63,18 @@ export default function MarketsPage() {
         </div>
       </Section>
 
-      <section className="bg-brand-forest text-brand-paper py-12 px-4 text-center border-t border-brand-green/30">
-        <div className="max-w-3xl mx-auto space-y-4">
-          <h2 className="text-2xl font-bold">Have a Project in These Sectors?</h2>
+      <section className="bg-brand-forest text-brand-paper border-brand-green/30 border-t px-4 py-12 text-center">
+        <div className="mx-auto max-w-3xl space-y-4">
+          <h2 className="text-2xl font-bold">
+            Have a Project in These Sectors?
+          </h2>
           <p className="text-brand-paper/90 text-sm">
             Partner with OGL for meticulous, cost-effective service delivery.
           </p>
           <div>
             <Link
               href="/quote"
-              className="inline-block bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-bold px-6 py-3 rounded text-sm transition-colors border border-brand-gold/40 shadow-sm"
+              className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 border-brand-gold/40 inline-block rounded border px-6 py-3 text-sm font-bold shadow-sm transition-colors"
             >
               Request a quotation
             </Link>

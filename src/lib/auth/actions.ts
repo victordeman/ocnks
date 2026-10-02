@@ -12,7 +12,9 @@ export type ActionResponse =
   | { ok: true; message?: string }
   | { ok: false; errors?: Record<string, string[]>; error?: string };
 
-export async function registerUserAction(rawInput: unknown): Promise<ActionResponse> {
+export async function registerUserAction(
+  rawInput: unknown
+): Promise<ActionResponse> {
   const parseResult = registerSchema.safeParse(rawInput);
   if (!parseResult.success) {
     return {
@@ -74,12 +76,15 @@ export async function registerUserAction(rawInput: unknown): Promise<ActionRespo
     console.error("[REGISTER ERROR] Failed to create user account:", err);
     return {
       ok: false,
-      error: "An unexpected error occurred during registration. Please try again.",
+      error:
+        "An unexpected error occurred during registration. Please try again.",
     };
   }
 }
 
-export async function changePasswordAction(rawInput: unknown): Promise<ActionResponse> {
+export async function changePasswordAction(
+  rawInput: unknown
+): Promise<ActionResponse> {
   const session = await requireAuthSession();
   const userId = session.user.id;
 

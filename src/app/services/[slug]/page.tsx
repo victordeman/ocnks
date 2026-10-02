@@ -5,16 +5,10 @@ import { db } from "@/lib/db";
 import { PageHeader } from "@/components/PageHeader";
 import { Section } from "@/components/Section";
 
+export const dynamic = "force-dynamic";
+
 interface ServiceDetailPageProps {
   params: Promise<{ slug: string }>;
-}
-
-export async function generateStaticParams() {
-  const services = await db.serviceLine.findMany({
-    where: { active: true },
-    select: { slug: true },
-  });
-  return services.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({

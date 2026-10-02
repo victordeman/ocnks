@@ -2,7 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { Section } from "@/components/Section";
 
-export const revalidate = 60; // Revalidate dynamic data periodically
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const serviceLines = await db.serviceLine.findMany({

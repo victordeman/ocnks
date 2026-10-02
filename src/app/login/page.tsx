@@ -11,7 +11,9 @@ function LoginFormContent() {
   const callbackUrl = searchParams.get("callbackUrl") || "/app";
   const urlError = searchParams.get("error");
 
-  const [activeTab, setActiveTab] = useState<"credentials" | "magic">("credentials");
+  const [activeTab, setActiveTab] = useState<"credentials" | "magic">(
+    "credentials"
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [magicEmail, setMagicEmail] = useState("");
@@ -19,8 +21,8 @@ function LoginFormContent() {
     urlError === "CredentialsSignin"
       ? "Invalid email or password"
       : urlError === "EmailSignin"
-      ? "Failed to send sign-in email"
-      : null
+        ? "Failed to send sign-in email"
+        : null
   );
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,7 +43,9 @@ function LoginFormContent() {
 
       if (res?.error) {
         if (res.error.includes("Too many attempts")) {
-          setErrorMessage("Too many attempts — try again later or use email sign-in");
+          setErrorMessage(
+            "Too many attempts — try again later or use email sign-in"
+          );
         } else {
           setErrorMessage("Invalid email or password");
         }
@@ -76,9 +80,13 @@ function LoginFormContent() {
           res.error.includes("Email sign-in is not configured") ||
           res.error.includes("not configured")
         ) {
-          setErrorMessage("Email sign-in is not configured — use your password");
+          setErrorMessage(
+            "Email sign-in is not configured — use your password"
+          );
         } else {
-          setErrorMessage("Email sign-in is not configured — use your password");
+          setErrorMessage(
+            "Email sign-in is not configured — use your password"
+          );
         }
       } else {
         setSuccessMessage(
@@ -93,16 +101,16 @@ function LoginFormContent() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-sm border border-brand-green/20">
+    <div className="border-brand-green/20 mx-auto w-full max-w-md rounded-lg border bg-white p-6 shadow-sm sm:p-8">
       <div className="mb-6 text-center">
-        <h1 className="text-2xl font-bold text-brand-forest">Sign in</h1>
-        <p className="text-sm text-brand-forest/70 mt-1">
+        <h1 className="text-brand-forest text-2xl font-bold">Sign in</h1>
+        <p className="text-brand-forest/70 mt-1 text-sm">
           Access the OCNKS Global operations console
         </p>
       </div>
 
       {/* Method Tabs */}
-      <div className="flex border-b border-brand-green/20 mb-6" role="tablist">
+      <div className="border-brand-green/20 mb-6 flex border-b" role="tablist">
         <button
           type="button"
           role="tab"
@@ -114,10 +122,10 @@ function LoginFormContent() {
             setErrorMessage(null);
             setSuccessMessage(null);
           }}
-          className={`flex-1 py-3 text-sm font-semibold border-b-2 text-center transition-colors min-h-[44px] ${
+          className={`min-h-[44px] flex-1 border-b-2 py-3 text-center text-sm font-semibold transition-colors ${
             activeTab === "credentials"
               ? "border-brand-green text-brand-green"
-              : "border-transparent text-brand-forest/60 hover:text-brand-forest"
+              : "text-brand-forest/60 hover:text-brand-forest border-transparent"
           }`}
         >
           Password
@@ -133,10 +141,10 @@ function LoginFormContent() {
             setErrorMessage(null);
             setSuccessMessage(null);
           }}
-          className={`flex-1 py-3 text-sm font-semibold border-b-2 text-center transition-colors min-h-[44px] ${
+          className={`min-h-[44px] flex-1 border-b-2 py-3 text-center text-sm font-semibold transition-colors ${
             activeTab === "magic"
               ? "border-brand-green text-brand-green"
-              : "border-transparent text-brand-forest/60 hover:text-brand-forest"
+              : "text-brand-forest/60 hover:text-brand-forest border-transparent"
           }`}
         >
           Email sign-in link
@@ -146,12 +154,12 @@ function LoginFormContent() {
       {/* Live Error / Success Notifications */}
       <div aria-live="polite" className="mb-4">
         {errorMessage && (
-          <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded text-sm font-medium">
+          <div className="rounded border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-800">
             {errorMessage}
           </div>
         )}
         {successMessage && (
-          <div className="p-3 bg-green-50 border border-green-200 text-brand-green rounded text-sm font-medium">
+          <div className="text-brand-green rounded border border-green-200 bg-green-50 p-3 text-sm font-medium">
             {successMessage}
           </div>
         )}
@@ -167,7 +175,10 @@ function LoginFormContent() {
           className="space-y-4"
         >
           <div>
-            <label htmlFor="login-email" className="block text-sm font-medium text-brand-forest mb-1">
+            <label
+              htmlFor="login-email"
+              className="text-brand-forest mb-1 block text-sm font-medium"
+            >
               Email address
             </label>
             <input
@@ -178,12 +189,15 @@ function LoginFormContent() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@company.com"
-              className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+              className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
             />
           </div>
 
           <div>
-            <label htmlFor="login-password" className="block text-sm font-medium text-brand-forest mb-1">
+            <label
+              htmlFor="login-password"
+              className="text-brand-forest mb-1 block text-sm font-medium"
+            >
               Password
             </label>
             <input
@@ -194,14 +208,14 @@ function LoginFormContent() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••••"
-              className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+              className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 bg-brand-green text-white font-semibold rounded-md hover:bg-brand-forest transition-colors focus:outline-none focus:ring-2 focus:ring-brand-green focus:ring-offset-2 disabled:opacity-50 min-h-[44px]"
+            className="bg-brand-green hover:bg-brand-forest focus:ring-brand-green min-h-[44px] w-full rounded-md px-4 py-3 font-semibold text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
           >
             {isSubmitting ? "Signing in..." : "Sign in"}
           </button>
@@ -218,7 +232,10 @@ function LoginFormContent() {
           className="space-y-4"
         >
           <div>
-            <label htmlFor="magic-email" className="block text-sm font-medium text-brand-forest mb-1">
+            <label
+              htmlFor="magic-email"
+              className="text-brand-forest mb-1 block text-sm font-medium"
+            >
               Email address
             </label>
             <input
@@ -229,26 +246,26 @@ function LoginFormContent() {
               value={magicEmail}
               onChange={(e) => setMagicEmail(e.target.value)}
               placeholder="name@company.com"
-              className="w-full px-3 py-2.5 border border-brand-green/30 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent text-brand-forest text-base min-h-[44px]"
+              className="border-brand-green/30 focus:ring-brand-green text-brand-forest min-h-[44px] w-full rounded-md border px-3 py-2.5 text-base focus:border-transparent focus:ring-2 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 bg-brand-green text-white font-semibold rounded-md hover:bg-brand-forest transition-colors focus:outline-none focus:ring-2 focus:ring-brand-green focus:ring-offset-2 disabled:opacity-50 min-h-[44px]"
+            className="bg-brand-green hover:bg-brand-forest focus:ring-brand-green min-h-[44px] w-full rounded-md px-4 py-3 font-semibold text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
           >
             {isSubmitting ? "Sending link..." : "Email me a sign-in link"}
           </button>
         </form>
       )}
 
-      <div className="mt-6 text-center pt-4 border-t border-brand-green/10">
-        <p className="text-sm text-brand-forest/80">
+      <div className="border-brand-green/10 mt-6 border-t pt-4 text-center">
+        <p className="text-brand-forest/80 text-sm">
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            className="font-semibold text-brand-green hover:underline underline-offset-2"
+            className="text-brand-green font-semibold underline-offset-2 hover:underline"
           >
             Register company account
           </Link>
@@ -260,8 +277,12 @@ function LoginFormContent() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-brand-paper">
-      <Suspense fallback={<div className="text-center text-brand-forest py-8">Loading...</div>}>
+    <div className="bg-brand-paper flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+      <Suspense
+        fallback={
+          <div className="text-brand-forest py-8 text-center">Loading...</div>
+        }
+      >
         <LoginFormContent />
       </Suspense>
     </div>

@@ -6,7 +6,11 @@ import bcrypt from "bcryptjs";
 import { Resend as ResendClient } from "resend";
 import { db } from "@/lib/db";
 import { Role } from "@prisma/client";
-import { checkAuthRateLimit, recordFailedAuthAttempt, resetAuthRateLimit } from "@/lib/auth/rate-limit";
+import {
+  checkAuthRateLimit,
+  recordFailedAuthAttempt,
+  resetAuthRateLimit,
+} from "@/lib/auth/rate-limit";
 import { bootstrapAdmin } from "@/lib/auth/bootstrap";
 import { authConfig } from "./auth.config";
 
@@ -34,13 +38,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (req && req.headers) {
           const xForwardedFor = req.headers.get("x-forwarded-for");
           const xRealIp = req.headers.get("x-real-ip");
-          ip = xForwardedFor ? xForwardedFor.split(",")[0].trim() : (xRealIp || "127.0.0.1");
+          ip = xForwardedFor
+            ? xForwardedFor.split(",")[0].trim()
+            : xRealIp || "127.0.0.1";
         }
 
         // 1. Auth rate limiting: 5 attempts / 10 minutes per email
         const rateLimitResult = await checkAuthRateLimit(email, ip);
         if (!rateLimitResult.allowed) {
-          throw new Error("Too many attempts — try again later or use email sign-in");
+          throw new Error(
+            "Too many attempts — try again later or use email sign-in"
+          );
         }
 
         // 2. Fetch user
@@ -54,7 +62,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
 
         // 3. Verify password
-        const isValidPassword = await bcrypt.compare(password, user.passwordHash);
+        const isValidPassword = await bcrypt.compare(
+          password,
+          user.passwordHash
+        );
         if (!isValidPassword) {
           recordFailedAuthAttempt(email, ip);
           return null;
@@ -79,11 +90,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const apiKey = process.env.RESEND_API_KEY;
         if (!apiKey || apiKey.trim() === "") {
-          console.log(`[MAGIC LINK] Email sign-in requested for ${email} but RESEND_API_KEY is unset.`);
-          throw new Error("Email sign-in is not configured — use your password");
+          console.log(
+            `[MAGIC LINK] Email sign-in requested for ${email} but RESEND_API_KEY is unset.`
+          );
+          throw new Error(
+            "Email sign-in is not configured — use your password"
+          );
         }
 
-        const from = process.env.EMAIL_FROM || "OCNKS Global <onboarding@resend.dev>";
+        const from =
+          process.env.EMAIL_FROM || "OCNKS Global <onboarding@resend.dev>";
         const resendClient = new ResendClient(apiKey);
 
         const html = `
@@ -117,7 +133,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
 
         if (error) {
-          console.error("[MAGIC LINK ERROR] Failed to send verification email:", error);
+          console.error(
+            "[MAGIC LINK ERROR] Failed to send verification email:",
+            error
+          );
           throw new Error("Failed to send sign-in email. Please try again.");
         }
       },

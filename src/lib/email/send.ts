@@ -13,7 +13,9 @@ export interface SendRfqEmailsParams {
   desiredStart?: string;
 }
 
-export async function sendRfqEmails(params: SendRfqEmailsParams): Promise<void> {
+export async function sendRfqEmails(
+  params: SendRfqEmailsParams
+): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey || apiKey.trim() === "") {
     console.log(`[RFQ ${params.publicId}] email skipped: no key`);
@@ -89,14 +91,22 @@ export async function sendRfqEmails(params: SendRfqEmailsParams): Promise<void> 
       html: internalHtml,
     });
   } catch (error) {
-    console.error(`[RFQ ${params.publicId}] Failed to send email notifications:`, error);
+    console.error(
+      `[RFQ ${params.publicId}] Failed to send email notifications:`,
+      error
+    );
   }
 }
 
-export async function sendWelcomeEmail(to: string, name: string): Promise<void> {
+export async function sendWelcomeEmail(
+  to: string,
+  name: string
+): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey || apiKey.trim() === "") {
-    console.log(`[WELCOME EMAIL] Welcome email skipped for ${to}: no RESEND_API_KEY`);
+    console.log(
+      `[WELCOME EMAIL] Welcome email skipped for ${to}: no RESEND_API_KEY`
+    );
     return;
   }
 
@@ -129,6 +139,9 @@ export async function sendWelcomeEmail(to: string, name: string): Promise<void> 
       html,
     });
   } catch (error) {
-    console.error(`[WELCOME EMAIL ERROR] Failed to send welcome email to ${to}:`, error);
+    console.error(
+      `[WELCOME EMAIL ERROR] Failed to send welcome email to ${to}:`,
+      error
+    );
   }
 }

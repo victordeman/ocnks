@@ -35,20 +35,25 @@ export function AppNav({ user }: AppNavProps) {
   };
 
   return (
-    <div className="bg-brand-forest text-brand-paper border-b border-brand-green/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-3 gap-3 border-b border-brand-paper/10">
+    <div className="bg-brand-forest text-brand-paper border-brand-green/30 border-b">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="border-brand-paper/10 flex flex-col gap-3 border-b py-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-xs uppercase tracking-wider bg-brand-gold text-brand-forest font-bold px-2 py-0.5 rounded">
+            <span className="bg-brand-gold text-brand-forest rounded px-2 py-0.5 text-xs font-bold tracking-wider uppercase">
               Console
             </span>
             <div className="text-sm">
-              <span className="font-semibold text-brand-paper">{user.name || user.email}</span>
+              <span className="text-brand-paper font-semibold">
+                {user.name || user.email}
+              </span>
               {user.companyName && (
-                <span className="text-brand-paper/70 font-normal"> · {user.companyName}</span>
+                <span className="text-brand-paper/70 font-normal">
+                  {" "}
+                  · {user.companyName}
+                </span>
               )}
             </div>
-            <span className="text-xs font-mono px-2 py-0.5 rounded bg-brand-green/30 border border-brand-gold/20 text-brand-gold">
+            <span className="bg-brand-green/30 border-brand-gold/20 text-brand-gold rounded border px-2 py-0.5 font-mono text-xs">
               {user.role}
             </span>
           </div>
@@ -56,14 +61,14 @@ export function AppNav({ user }: AppNavProps) {
           <button
             type="button"
             onClick={handleSignOut}
-            className="self-start sm:self-auto text-xs font-semibold px-3 py-1.5 bg-brand-paper/10 hover:bg-brand-paper/20 text-brand-paper rounded transition-colors min-h-[36px]"
+            className="bg-brand-paper/10 hover:bg-brand-paper/20 text-brand-paper min-h-[36px] self-start rounded px-3 py-1.5 text-xs font-semibold transition-colors sm:self-auto"
           >
             Sign out
           </button>
         </div>
 
         {/* Secondary Navigation */}
-        <nav className="flex space-x-1 sm:space-x-4 overflow-x-auto py-2">
+        <nav className="flex space-x-1 overflow-x-auto py-2 sm:space-x-4">
           {navItems.map((item) => {
             const isActive =
               item.href === "/app"
@@ -73,7 +78,7 @@ export function AppNav({ user }: AppNavProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-3 py-2 text-sm font-medium rounded-md whitespace-nowrap transition-colors min-h-[44px] flex items-center ${
+                className={`flex min-h-[44px] items-center rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                   isActive
                     ? "bg-brand-green text-brand-gold font-semibold"
                     : "text-brand-paper/80 hover:bg-brand-green/30 hover:text-brand-paper"

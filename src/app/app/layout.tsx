@@ -9,7 +9,7 @@ export default async function AppConsoleLayout({
   const session = await requireAuthSession();
 
   return (
-    <div className="min-h-screen bg-brand-paper/50 flex flex-col">
+    <div className="bg-brand-paper/50 flex min-h-screen flex-col">
       <AppNav
         user={{
           name: session.user.name,
@@ -18,7 +18,7 @@ export default async function AppConsoleLayout({
           role: session.user.role,
         }}
       />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
         {children}
       </main>
     </div>

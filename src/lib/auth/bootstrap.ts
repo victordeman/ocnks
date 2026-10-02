@@ -13,7 +13,9 @@ export async function bootstrapAdmin(): Promise<void> {
   const email = process.env.ADMIN_BOOTSTRAP_EMAIL?.trim();
 
   if (!email) {
-    console.log("[ADMIN BOOTSTRAP] Skipped: ADMIN_BOOTSTRAP_EMAIL environment variable is unset.");
+    console.log(
+      "[ADMIN BOOTSTRAP] Skipped: ADMIN_BOOTSTRAP_EMAIL environment variable is unset."
+    );
     return;
   }
 
@@ -45,12 +47,16 @@ export async function bootstrapAdmin(): Promise<void> {
       },
     });
 
-    console.log("========================================================================");
+    console.log(
+      "========================================================================"
+    );
     console.log("[ADMIN BOOTSTRAP SUCCESS] Initial admin user created:");
     console.log(`  Email: ${adminUser.email}`);
     console.log(`  Generated Password: ${randomPass}`);
     console.log("  WARNING: Log in and change this password immediately!");
-    console.log("========================================================================");
+    console.log(
+      "========================================================================"
+    );
   } catch (error) {
     console.error("[ADMIN BOOTSTRAP ERROR] Failed during execution:", error);
   }

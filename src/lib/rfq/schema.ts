@@ -27,10 +27,7 @@ export const rfqSchema = z.object({
       phoneRegex,
       "Phone number may only contain digits, spaces, +, -, and parentheses"
     ),
-  serviceLineSlug: z
-    .string()
-    .trim()
-    .min(1, "Please select a service line"),
+  serviceLineSlug: z.string().trim().min(1, "Please select a service line"),
   location: z
     .string()
     .trim()

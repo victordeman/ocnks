@@ -20,34 +20,34 @@ interface ActivityPanelProps {
 
 export function ActivityPanel({ logs }: ActivityPanelProps) {
   return (
-    <div className="bg-white p-4 rounded-lg border border-brand-green/20 shadow-sm space-y-3">
+    <div className="border-brand-green/20 space-y-3 rounded-lg border bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-forest/70">
+        <h3 className="text-brand-forest/70 text-xs font-bold tracking-wider uppercase">
           Activity & Audit Log (Staff Console)
         </h3>
-        <span className="text-xs font-semibold px-2 py-0.5 bg-gray-100 rounded text-gray-700">
+        <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-700">
           {logs.length} Log Entries
         </span>
       </div>
 
       {logs.length === 0 ? (
-        <p className="text-xs text-brand-forest/60 italic py-1">
+        <p className="text-brand-forest/60 py-1 text-xs italic">
           No audit entries recorded yet.
         </p>
       ) : (
-        <div className="divide-y divide-brand-green/10 border border-brand-green/10 rounded overflow-hidden">
+        <div className="divide-brand-green/10 border-brand-green/10 divide-y overflow-hidden rounded border">
           {logs.map((log) => {
             const actorText = log.actor
               ? `${log.actor.name} (${log.actor.role})`
               : "System";
 
             return (
-              <div key={log.id} className="p-3 bg-white text-xs space-y-1">
+              <div key={log.id} className="space-y-1 bg-white p-3 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-brand-green font-mono">
+                  <span className="text-brand-green font-mono font-bold">
                     {log.action}
                   </span>
-                  <span className="text-[11px] text-brand-forest/60">
+                  <span className="text-brand-forest/60 text-[11px]">
                     {formatDateLagos(log.createdAt)}
                   </span>
                 </div>
@@ -55,7 +55,7 @@ export function ActivityPanel({ logs }: ActivityPanelProps) {
                   Actor: <span className="font-semibold">{actorText}</span>
                 </p>
                 {log.meta && (
-                  <pre className="mt-1 p-2 bg-brand-paper/50 rounded border border-brand-green/10 text-[11px] font-mono text-brand-forest overflow-x-auto">
+                  <pre className="bg-brand-paper/50 border-brand-green/10 text-brand-forest mt-1 overflow-x-auto rounded border p-2 font-mono text-[11px]">
                     {JSON.stringify(log.meta, null, 2)}
                   </pre>
                 )}

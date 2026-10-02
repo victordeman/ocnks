@@ -24,20 +24,21 @@ export default function Error({
       />
 
       <Section bg="paper">
-        <div className="max-w-md mx-auto bg-white p-8 rounded-lg border border-brand-forest/10 shadow-sm text-center space-y-4">
+        <div className="border-brand-forest/10 mx-auto max-w-md space-y-4 rounded-lg border bg-white p-8 text-center shadow-sm">
           <p className="text-brand-forest/80 text-base">
-            We apologize for the inconvenience. Please try reloading the page or return to the main home page.
+            We apologize for the inconvenience. Please try reloading the page or
+            return to the main home page.
           </p>
-          <div className="pt-2 flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
             <button
               onClick={() => reset()}
-              className="bg-brand-green text-brand-paper hover:bg-brand-forest font-semibold px-5 py-2 rounded text-sm transition-colors"
+              className="bg-brand-green text-brand-paper hover:bg-brand-forest rounded px-5 py-2 text-sm font-semibold transition-colors"
             >
               Try Again
             </button>
             <Link
               href="/"
-              className="bg-brand-paper text-brand-forest hover:bg-brand-forest/10 border border-brand-forest/20 font-semibold px-5 py-2 rounded text-sm transition-colors"
+              className="bg-brand-paper text-brand-forest hover:bg-brand-forest/10 border-brand-forest/20 rounded border px-5 py-2 text-sm font-semibold transition-colors"
             >
               Return Home
             </Link>

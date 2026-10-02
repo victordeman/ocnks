@@ -4,7 +4,11 @@ export const dynamic = "force-dynamic";
 import { getCurrentSession, rfqWhereForRole } from "@/lib/auth/session";
 import { db } from "@/lib/db";
 import { Role, RfqStatus } from "@prisma/client";
-import { formatDateOnlyLagos, getStatusBadgeClass, formatStatusLabel } from "@/lib/utils/format";
+import {
+  formatDateOnlyLagos,
+  getStatusBadgeClass,
+  formatStatusLabel,
+} from "@/lib/utils/format";
 
 export default async function DashboardPage() {
   const session = await getCurrentSession();
@@ -40,12 +44,12 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* Header Banner */}
-      <div className="bg-white p-6 rounded-lg border border-brand-green/20 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="border-brand-green/20 flex flex-col justify-between gap-4 rounded-lg border bg-white p-6 shadow-sm md:flex-row md:items-center">
         <div>
-          <h1 className="text-2xl font-bold text-brand-forest">
+          <h1 className="text-brand-forest text-2xl font-bold">
             Welcome, {session.user.name || session.user.email}
           </h1>
-          <p className="text-sm text-brand-forest/70 mt-1">
+          <p className="text-brand-forest/70 mt-1 text-sm">
             {isClient
               ? `Client Operations Dashboard — ${session.user.companyName || "Organization Account"}`
               : `Operations Console — ${role} Overview`}
@@ -55,14 +59,14 @@ export default async function DashboardPage() {
         {isClient ? (
           <Link
             href="/quote"
-            className="inline-flex items-center justify-center px-4 py-2.5 bg-brand-green text-white font-semibold text-sm rounded hover:bg-brand-forest transition-colors shadow-sm min-h-[44px]"
+            className="bg-brand-green hover:bg-brand-forest inline-flex min-h-[44px] items-center justify-center rounded px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors"
           >
             Submit an RFQ
           </Link>
         ) : (
           <Link
             href="/app/rfqs"
-            className="inline-flex items-center justify-center px-4 py-2.5 bg-brand-green text-white font-semibold text-sm rounded hover:bg-brand-forest transition-colors shadow-sm min-h-[44px]"
+            className="bg-brand-green hover:bg-brand-forest inline-flex min-h-[44px] items-center justify-center rounded px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors"
           >
             View all requests
           </Link>
@@ -70,7 +74,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Status Metrics Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {isClient ? (
           <>
             <StatusMetricCard
@@ -131,14 +135,16 @@ export default async function DashboardPage() {
       </div>
 
       {/* Recent RFQs Section */}
-      <div className="bg-white rounded-lg border border-brand-green/20 shadow-sm overflow-hidden">
-        <div className="p-4 sm:p-6 border-b border-brand-green/10 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-brand-forest">
-            {isClient ? "Your Recent Requests" : "Recent Requests across Clients"}
+      <div className="border-brand-green/20 overflow-hidden rounded-lg border bg-white shadow-sm">
+        <div className="border-brand-green/10 flex items-center justify-between border-b p-4 sm:p-6">
+          <h2 className="text-brand-forest text-lg font-bold">
+            {isClient
+              ? "Your Recent Requests"
+              : "Recent Requests across Clients"}
           </h2>
           <Link
             href="/app/rfqs"
-            className="text-sm font-semibold text-brand-green hover:underline"
+            className="text-brand-green text-sm font-semibold hover:underline"
           >
             View all →
           </Link>
@@ -146,11 +152,13 @@ export default async function DashboardPage() {
 
         {recentRfqs.length === 0 ? (
           <div className="p-8 text-center">
-            <p className="text-brand-forest/70 mb-4 text-base">No requests for quotation found.</p>
+            <p className="text-brand-forest/70 mb-4 text-base">
+              No requests for quotation found.
+            </p>
             {isClient && (
               <Link
                 href="/quote"
-                className="inline-flex items-center justify-center px-4 py-2 bg-brand-green text-white font-semibold text-sm rounded hover:bg-brand-forest transition-colors min-h-[44px]"
+                className="bg-brand-green hover:bg-brand-forest inline-flex min-h-[44px] items-center justify-center rounded px-4 py-2 text-sm font-semibold text-white transition-colors"
               >
                 Submit an RFQ
               </Link>
@@ -158,8 +166,8 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-brand-forest">
-              <thead className="bg-brand-paper/80 border-b border-brand-green/10 text-xs uppercase tracking-wider font-semibold text-brand-forest/70">
+            <table className="text-brand-forest w-full text-left text-sm">
+              <thead className="bg-brand-paper/80 border-brand-green/10 text-brand-forest/70 border-b text-xs font-semibold tracking-wider uppercase">
                 <tr>
                   <th className="p-4">Reference</th>
                   {!isClient && <th className="p-4">Company</th>}
@@ -169,30 +177,35 @@ export default async function DashboardPage() {
                   <th className="p-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-brand-green/10">
+              <tbody className="divide-brand-green/10 divide-y">
                 {recentRfqs.map((rfq) => (
-                  <tr key={rfq.id} className="hover:bg-brand-paper/30 transition-colors">
-                    <td className="p-4 font-mono font-bold text-brand-green">
+                  <tr
+                    key={rfq.id}
+                    className="hover:bg-brand-paper/30 transition-colors"
+                  >
+                    <td className="text-brand-green p-4 font-mono font-bold">
                       {rfq.publicId}
                     </td>
-                    {!isClient && <td className="p-4 font-medium">{rfq.companyName}</td>}
+                    {!isClient && (
+                      <td className="p-4 font-medium">{rfq.companyName}</td>
+                    )}
                     <td className="p-4">{rfq.serviceLine.name}</td>
                     <td className="p-4">
                       <span
-                        className={`inline-block px-2.5 py-0.5 rounded text-xs font-semibold border ${getStatusBadgeClass(
+                        className={`inline-block rounded border px-2.5 py-0.5 text-xs font-semibold ${getStatusBadgeClass(
                           rfq.status
                         )}`}
                       >
                         {formatStatusLabel(rfq.status)}
                       </span>
                     </td>
-                    <td className="p-4 text-brand-forest/70">
+                    <td className="text-brand-forest/70 p-4">
                       {formatDateOnlyLagos(rfq.createdAt)}
                     </td>
                     <td className="p-4 text-right">
                       <Link
                         href={`/app/rfqs/${rfq.id}`}
-                        className="text-xs font-semibold px-3 py-1.5 bg-brand-green/10 text-brand-green hover:bg-brand-green hover:text-white rounded transition-colors inline-block min-h-[36px] leading-[24px]"
+                        className="bg-brand-green/10 text-brand-green hover:bg-brand-green inline-block min-h-[36px] rounded px-3 py-1.5 text-xs leading-[24px] font-semibold transition-colors hover:text-white"
                       >
                         View request
                       </Link>
@@ -218,25 +231,25 @@ function StatusMetricCard({
   status: string;
 }) {
   return (
-    <div className="bg-white p-4 rounded-lg border border-brand-green/20 shadow-sm flex flex-col justify-between">
-      <span className="text-xs font-semibold text-brand-forest/70 uppercase tracking-wider">
+    <div className="border-brand-green/20 flex flex-col justify-between rounded-lg border bg-white p-4 shadow-sm">
+      <span className="text-brand-forest/70 text-xs font-semibold tracking-wider uppercase">
         {label}
       </span>
       <div className="mt-2 flex items-baseline justify-between">
-        <span className="text-2xl font-bold text-brand-forest">{count}</span>
+        <span className="text-brand-forest text-2xl font-bold">{count}</span>
         <span
-          className={`w-2.5 h-2.5 rounded-full ${
+          className={`h-2.5 w-2.5 rounded-full ${
             status === "RECEIVED"
               ? "bg-blue-500"
               : status === "UNDER_REVIEW"
-              ? "bg-amber-500"
-              : status === "QUOTED"
-              ? "bg-purple-500"
-              : status === "AWARDED"
-              ? "bg-green-500"
-              : status === "DECLINED"
-              ? "bg-red-500"
-              : "bg-gray-500"
+                ? "bg-amber-500"
+                : status === "QUOTED"
+                  ? "bg-purple-500"
+                  : status === "AWARDED"
+                    ? "bg-green-500"
+                    : status === "DECLINED"
+                      ? "bg-red-500"
+                      : "bg-gray-500"
           }`}
           aria-hidden="true"
         />

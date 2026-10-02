@@ -34,7 +34,8 @@ const ALLOWED_MIME_TYPES = [
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 ];
 
-const ACCEPT_STRING = ".pdf,.png,.jpg,.jpeg,.docx,.xlsx,application/pdf,image/png,image/jpeg,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+const ACCEPT_STRING =
+  ".pdf,.png,.jpg,.jpeg,.docx,.xlsx,application/pdf,image/png,image/jpeg,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 function formatBytes(bytes: number): string {
   if (bytes === 0) return "0 Bytes";
@@ -82,7 +83,9 @@ export function AttachmentSection({
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      setErrorMessage("Selected file exceeds the maximum allowed size of 10 MB.");
+      setErrorMessage(
+        "Selected file exceeds the maximum allowed size of 10 MB."
+      );
       if (fileInputRef.current) fileInputRef.current.value = "";
       return;
     }
@@ -114,27 +117,29 @@ export function AttachmentSection({
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg border border-brand-green/20 shadow-sm space-y-4">
+    <div className="border-brand-green/20 space-y-4 rounded-lg border bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-forest/70">
+        <h3 className="text-brand-forest/70 text-xs font-bold tracking-wider uppercase">
           Attachments ({attachments.length})
         </h3>
-        <span className="text-xs text-brand-forest/60 font-medium">
+        <span className="text-brand-forest/60 text-xs font-medium">
           Max file size: 10 MB
         </span>
       </div>
 
       {/* Upload Form or Unconfigured Storage Message */}
       {!isStorageConfigured ? (
-        <div className="p-3 bg-amber-50 rounded border border-amber-200 text-amber-900 text-xs">
+        <div className="rounded border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
           <p className="font-semibold">
-            File storage is not configured — send files to ocnksglobal@gmail.com instead
+            File storage is not configured — send files to ocnksglobal@gmail.com
+            instead
           </p>
         </div>
       ) : isUploadDisabledForClient ? (
-        <div className="p-3 bg-gray-50 rounded border border-gray-200 text-gray-700 text-xs">
+        <div className="rounded border border-gray-200 bg-gray-50 p-3 text-xs text-gray-700">
           <p className="font-medium">
-            File uploads are disabled because this request is in a finalized state ({status}).
+            File uploads are disabled because this request is in a finalized
+            state ({status}).
           </p>
         </div>
       ) : (
@@ -151,24 +156,30 @@ export function AttachmentSection({
             />
             <label
               htmlFor="file-upload-input"
-              className={`inline-flex items-center justify-center px-4 py-2 bg-brand-paper border border-brand-green/40 text-brand-forest font-semibold text-xs rounded hover:bg-brand-green hover:text-white transition-colors cursor-pointer min-h-[44px] ${
-                isPending ? "opacity-50 pointer-events-none" : ""
+              className={`bg-brand-paper border-brand-green/40 text-brand-forest hover:bg-brand-green inline-flex min-h-[44px] cursor-pointer items-center justify-center rounded border px-4 py-2 text-xs font-semibold transition-colors hover:text-white ${
+                isPending ? "pointer-events-none opacity-50" : ""
               }`}
             >
               {isPending ? "Uploading file..." : "Upload file"}
             </label>
-            <span className="text-xs text-brand-forest/60">
+            <span className="text-brand-forest/60 text-xs">
               Accepted: PDF, PNG, JPEG, DOCX, XLSX
             </span>
           </div>
 
           {errorMessage && (
-            <p className="text-xs font-semibold text-red-600 bg-red-50 p-2 rounded border border-red-200" aria-live="polite">
+            <p
+              className="rounded border border-red-200 bg-red-50 p-2 text-xs font-semibold text-red-600"
+              aria-live="polite"
+            >
               {errorMessage}
             </p>
           )}
           {successMessage && (
-            <p className="text-xs font-semibold text-emerald-700 bg-emerald-50 p-2 rounded border border-emerald-200" aria-live="polite">
+            <p
+              className="rounded border border-emerald-200 bg-emerald-50 p-2 text-xs font-semibold text-emerald-700"
+              aria-live="polite"
+            >
               {successMessage}
             </p>
           )}
@@ -177,11 +188,11 @@ export function AttachmentSection({
 
       {/* Attachment List */}
       {attachments.length === 0 ? (
-        <p className="text-xs text-brand-forest/60 italic py-2">
+        <p className="text-brand-forest/60 py-2 text-xs italic">
           No specification documents or attachments uploaded yet.
         </p>
       ) : (
-        <div className="divide-y divide-brand-green/10 border border-brand-green/10 rounded overflow-hidden">
+        <div className="divide-brand-green/10 border-brand-green/10 divide-y overflow-hidden rounded border">
           {attachments.map((att) => {
             const uploaderText = att.uploadedBy
               ? `${att.uploadedBy.name} (${att.uploadedBy.role})`
@@ -190,13 +201,13 @@ export function AttachmentSection({
             return (
               <div
                 key={att.id}
-                className="p-3 flex items-center justify-between bg-white hover:bg-brand-paper/40 transition-colors text-xs"
+                className="hover:bg-brand-paper/40 flex items-center justify-between bg-white p-3 text-xs transition-colors"
               >
-                <div className="space-y-0.5 max-w-[70%]">
-                  <p className="font-semibold text-brand-forest truncate">
+                <div className="max-w-[70%] space-y-0.5">
+                  <p className="text-brand-forest truncate font-semibold">
                     {att.fileName}
                   </p>
-                  <p className="text-[11px] text-brand-forest/60">
+                  <p className="text-brand-forest/60 text-[11px]">
                     {formatBytes(att.size)} · Uploaded by {uploaderText} on{" "}
                     {formatDateLagos(att.createdAt)}
                   </p>
@@ -204,7 +215,7 @@ export function AttachmentSection({
                 <a
                   href={`/app/rfqs/${rfqId}/attachments/${att.id}`}
                   download={att.fileName}
-                  className="px-3 py-1.5 bg-brand-green/10 text-brand-green hover:bg-brand-green hover:text-white font-semibold text-xs rounded transition-colors inline-flex items-center min-h-[36px]"
+                  className="bg-brand-green/10 text-brand-green hover:bg-brand-green inline-flex min-h-[36px] items-center rounded px-3 py-1.5 text-xs font-semibold transition-colors hover:text-white"
                 >
                   Download
                 </a>

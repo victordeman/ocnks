@@ -13,7 +13,10 @@ export interface DownloadInfo {
 }
 
 export function isStorageConfigured(): boolean {
-  if (process.env.BLOB_READ_WRITE_TOKEN && process.env.BLOB_READ_WRITE_TOKEN.trim() !== "") {
+  if (
+    process.env.BLOB_READ_WRITE_TOKEN &&
+    process.env.BLOB_READ_WRITE_TOKEN.trim() !== ""
+  ) {
     return true;
   }
   if (process.env.ALLOW_LOCAL_STORAGE === "true") {
@@ -27,7 +30,10 @@ export async function put(
   buffer: Buffer,
   contentType: string
 ): Promise<StoragePutResult> {
-  if (process.env.BLOB_READ_WRITE_TOKEN && process.env.BLOB_READ_WRITE_TOKEN.trim() !== "") {
+  if (
+    process.env.BLOB_READ_WRITE_TOKEN &&
+    process.env.BLOB_READ_WRITE_TOKEN.trim() !== ""
+  ) {
     const blob = await vercelPut(key, buffer, {
       access: "public",
       contentType,
@@ -50,10 +56,14 @@ export async function put(
     };
   }
 
-  throw new Error("File storage is not configured — send files to ocnksglobal@gmail.com instead");
+  throw new Error(
+    "File storage is not configured — send files to ocnksglobal@gmail.com instead"
+  );
 }
 
-export async function getDownloadInfo(storageKey: string): Promise<DownloadInfo | null> {
+export async function getDownloadInfo(
+  storageKey: string
+): Promise<DownloadInfo | null> {
   if (storageKey.startsWith("local://")) {
     const relativeKey = storageKey.replace("local://", "");
     const filePath = path.join(process.cwd(), ".uploads", relativeKey);

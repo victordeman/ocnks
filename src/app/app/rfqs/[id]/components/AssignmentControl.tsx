@@ -48,10 +48,10 @@ export function AssignmentControl({
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg border border-brand-green/20 shadow-sm space-y-3">
+    <div className="border-brand-green/20 space-y-3 rounded-lg border bg-white p-4 shadow-sm">
       <label
         htmlFor="assignee-select"
-        className="block text-xs font-bold uppercase tracking-wider text-brand-forest/70"
+        className="text-brand-forest/70 block text-xs font-bold tracking-wider uppercase"
       >
         Assign Operations Lead
       </label>
@@ -62,7 +62,7 @@ export function AssignmentControl({
           value={selectedAssignee}
           onChange={handleAssignChange}
           disabled={isPending}
-          className="flex-1 px-3 py-2 border border-brand-green/30 rounded text-sm bg-white font-medium focus:outline-none focus:ring-2 focus:ring-brand-green min-h-[44px]"
+          className="border-brand-green/30 focus:ring-brand-green min-h-[44px] flex-1 rounded border bg-white px-3 py-2 text-sm font-medium focus:ring-2 focus:outline-none"
         >
           <option value="">Unassigned</option>
           {staffUsers.map((user) => (
@@ -72,19 +72,25 @@ export function AssignmentControl({
           ))}
         </select>
         {isPending && (
-          <span className="text-xs font-semibold text-brand-forest/70 animate-pulse">
+          <span className="text-brand-forest/70 animate-pulse text-xs font-semibold">
             Assigning...
           </span>
         )}
       </div>
 
       {errorMessage && (
-        <p className="text-xs font-semibold text-red-600 bg-red-50 p-2 rounded border border-red-200" aria-live="polite">
+        <p
+          className="rounded border border-red-200 bg-red-50 p-2 text-xs font-semibold text-red-600"
+          aria-live="polite"
+        >
           {errorMessage}
         </p>
       )}
       {successMessage && (
-        <p className="text-xs font-semibold text-emerald-700 bg-emerald-50 p-2 rounded border border-emerald-200" aria-live="polite">
+        <p
+          className="rounded border border-emerald-200 bg-emerald-50 p-2 text-xs font-semibold text-emerald-700"
+          aria-live="polite"
+        >
           {successMessage}
         </p>
       )}
