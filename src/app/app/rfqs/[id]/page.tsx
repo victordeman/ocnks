@@ -1,4 +1,6 @@
 import Link from "next/link";
+
+export const dynamic = "force-dynamic";
 import { notFound } from "next/navigation";
 import { Role, Prisma } from "@prisma/client";
 import { requireAuthSession, rfqWhereForRole } from "@/lib/auth/session";
