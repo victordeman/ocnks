@@ -11,33 +11,72 @@ interface ServiceDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateStaticParams() {
+  if (!process.env.DATABASE_URL) {
+    return [];
+  }
+  try {
+    const services = await db.serviceLine.findMany({
+      where: { active: true },
+      select: { slug: true },
+    });
+    return services.map((service) => ({
+      slug: service.slug,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({
   params,
 }: ServiceDetailPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const service = await db.serviceLine.findUnique({
-    where: { slug },
-  });
-
-  if (!service || !service.active) {
+  if (!process.env.DATABASE_URL) {
     return {
-      title: "Service Not Found",
+      title: "Service Details",
     };
   }
 
-  return {
-    title: service.name,
-    description: service.summary,
-  };
+  try {
+    const { slug } = await params;
+    const service = await db.serviceLine.findUnique({
+      where: { slug },
+    });
+
+    if (!service || !service.active) {
+      return {
+        title: "Service Not Found",
+      };
+    }
+
+    return {
+      title: service.name,
+      description: service.summary,
+    };
+  } catch {
+    return {
+      title: "Service Details",
+    };
+  }
 }
 
 export default async function ServiceDetailPage({
   params,
 }: ServiceDetailPageProps) {
   const { slug } = await params;
-  const service = await db.serviceLine.findUnique({
-    where: { slug },
-  });
+
+  if (!process.env.DATABASE_URL) {
+    notFound();
+  }
+
+  let service;
+  try {
+    service = await db.serviceLine.findUnique({
+      where: { slug },
+    });
+  } catch {
+    notFound();
+  }
 
   if (!service || !service.active) {
     notFound();
@@ -48,40 +87,52 @@ export default async function ServiceDetailPage({
       <PageHeader title={service.name} intro={service.summary} />
 
       <Section bg="paper">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="mx-auto max-w-4xl space-y-8">
           {/* Main details */}
-          <div className="bg-white p-8 rounded-lg border border-brand-forest/10 shadow-sm space-y-4">
-            <h2 className="text-2xl font-bold text-brand-forest">
+          <div className="border-brand-forest/10 space-y-4 rounded-lg border bg-white p-8 shadow-sm">
+            <h2 className="text-brand-forest text-2xl font-bold">
               Service Overview & Specifications
             </h2>
-            <p className="text-brand-forest/90 leading-relaxed text-base">
+            <p className="text-brand-forest/90 text-base leading-relaxed">
               {service.details}
             </p>
           </div>
 
           {/* RFQ Hint Card */}
-          <div className="bg-white p-8 rounded-lg border border-brand-green/30 shadow-sm space-y-4">
-            <h2 className="text-xl font-bold text-brand-green">
+          <div className="border-brand-green/30 space-y-4 rounded-lg border bg-white p-8 shadow-sm">
+            <h2 className="text-brand-green text-xl font-bold">
               What to include in your RFQ
             </h2>
-            <p className="text-sm text-brand-forest/80 leading-relaxed">
-              When requesting a quotation for {service.name.toLowerCase()}, please prepare:
+            <p className="text-brand-forest/80 text-sm leading-relaxed">
+              When requesting a quotation for {service.name.toLowerCase()},
+              please prepare:
             </p>
-            <ul className="list-disc list-inside space-y-2 text-sm text-brand-forest/90 pl-2">
+            <ul className="text-brand-forest/90 list-inside list-disc space-y-2 pl-2 text-sm">
               <li>
-                <strong className="font-semibold text-brand-forest">Project Scope:</strong> Detailed description of requested items, work specifications, quantity, or maintenance requirements.
+                <strong className="text-brand-forest font-semibold">
+                  Project Scope:
+                </strong>{" "}
+                Detailed description of requested items, work specifications,
+                quantity, or maintenance requirements.
               </li>
               <li>
-                <strong className="font-semibold text-brand-forest">Site Location:</strong> Delivery or execution facility location (e.g., Port Harcourt, Abuja, offshore, or site address).
+                <strong className="text-brand-forest font-semibold">
+                  Site Location:
+                </strong>{" "}
+                Delivery or execution facility location (e.g., Port Harcourt,
+                Abuja, offshore, or site address).
               </li>
               <li>
-                <strong className="font-semibold text-brand-forest">Desired Start Date:</strong> Expected timeline for mobilization or material delivery.
+                <strong className="text-brand-forest font-semibold">
+                  Desired Start Date:
+                </strong>{" "}
+                Expected timeline for mobilization or material delivery.
               </li>
             </ul>
             <div className="pt-4">
               <Link
                 href="/quote"
-                className="inline-block bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-bold px-6 py-3 rounded text-sm transition-colors border border-brand-gold/40 shadow-sm"
+                className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 border-brand-gold/40 inline-block rounded border px-6 py-3 text-sm font-bold shadow-sm transition-colors"
               >
                 Submit RFQ
               </Link>
