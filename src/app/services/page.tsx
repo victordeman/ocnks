@@ -13,10 +13,21 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function ServicesPage() {
-  const serviceLines = await db.serviceLine.findMany({
-    where: { active: true },
-    orderBy: { sortOrder: "asc" },
-  });
+  type ServiceLineItem = Awaited<
+    ReturnType<typeof db.serviceLine.findMany>
+  >[number];
+  let serviceLines: ServiceLineItem[] = [];
+
+  if (process.env.DATABASE_URL) {
+    try {
+      serviceLines = await db.serviceLine.findMany({
+        where: { active: true },
+        orderBy: { sortOrder: "asc" },
+      });
+    } catch {
+      serviceLines = [];
+    }
+  }
 
   return (
     <div>
@@ -27,38 +38,39 @@ export default async function ServicesPage() {
 
       <Section bg="paper">
         {serviceLines.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg border border-brand-forest/10 p-8 space-y-4 max-w-lg mx-auto">
+          <div className="border-brand-forest/10 mx-auto max-w-lg space-y-4 rounded-lg border bg-white p-8 py-12 text-center">
             <p className="text-brand-forest/80 font-medium">
-              Our service catalogue is currently being updated. Please contact us directly for immediate inquiries.
+              Our service catalogue is currently being updated. Please contact
+              us directly for immediate inquiries.
             </p>
             <div>
               <Link
                 href="/contact"
-                className="inline-block bg-brand-green text-brand-paper hover:bg-brand-forest font-semibold px-5 py-2.5 rounded text-sm transition-colors"
+                className="bg-brand-green text-brand-paper hover:bg-brand-forest inline-block rounded px-5 py-2.5 text-sm font-semibold transition-colors"
               >
                 Contact Us
               </Link>
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {serviceLines.map((service) => (
               <div
                 key={service.id}
-                className="bg-white p-6 rounded-lg border border-brand-forest/10 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
+                className="border-brand-forest/10 flex flex-col justify-between rounded-lg border bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
               >
                 <div className="space-y-3">
-                  <h2 className="text-xl font-bold text-brand-forest">
+                  <h2 className="text-brand-forest text-xl font-bold">
                     {service.name}
                   </h2>
-                  <p className="text-sm text-brand-forest/80 leading-relaxed">
+                  <p className="text-brand-forest/80 text-sm leading-relaxed">
                     {service.summary}
                   </p>
                 </div>
                 <div className="pt-6">
                   <Link
                     href={`/services/${service.slug}`}
-                    className="inline-flex items-center text-sm font-semibold text-brand-green hover:text-brand-forest transition-colors"
+                    className="text-brand-green hover:text-brand-forest inline-flex items-center text-sm font-semibold transition-colors"
                   >
                     View details & RFQ hint
                     <span aria-hidden="true" className="ml-1">
@@ -72,16 +84,17 @@ export default async function ServicesPage() {
         )}
       </Section>
 
-      <section className="bg-brand-forest text-brand-paper py-12 px-4 text-center border-t border-brand-green/30">
-        <div className="max-w-3xl mx-auto space-y-4">
+      <section className="bg-brand-forest text-brand-paper border-brand-green/30 border-t px-4 py-12 text-center">
+        <div className="mx-auto max-w-3xl space-y-4">
           <h2 className="text-2xl font-bold">Need a Custom Service Package?</h2>
           <p className="text-brand-paper/90 text-sm">
-            We combine supply, procurement, and engineering capabilities under a single accountable structure.
+            We combine supply, procurement, and engineering capabilities under a
+            single accountable structure.
           </p>
           <div>
             <Link
               href="/quote"
-              className="inline-block bg-brand-gold text-brand-forest hover:bg-brand-gold/90 font-bold px-6 py-3 rounded text-sm transition-colors border border-brand-gold/40 shadow-sm"
+              className="bg-brand-gold text-brand-forest hover:bg-brand-gold/90 border-brand-gold/40 inline-block rounded border px-6 py-3 text-sm font-bold shadow-sm transition-colors"
             >
               Request a quotation
             </Link>
