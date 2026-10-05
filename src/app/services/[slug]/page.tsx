@@ -65,18 +65,9 @@ export default async function ServiceDetailPage({
 }: ServiceDetailPageProps) {
   const { slug } = await params;
 
-  if (!process.env.DATABASE_URL) {
-    notFound();
-  }
-
-  let service;
-  try {
-    service = await db.serviceLine.findUnique({
-      where: { slug },
-    });
-  } catch {
-    notFound();
-  }
+  const service = await db.serviceLine.findUnique({
+    where: { slug },
+  });
 
   if (!service || !service.active) {
     notFound();
