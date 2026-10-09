@@ -65,7 +65,7 @@ export function SiteHeader() {
             OG
           </div>
           <span className="text-brand-paper text-lg font-bold tracking-tight">
-            OCNKS GLOBAL
+            OCNKS GLOBAL LTD
           </span>
         </Link>
 

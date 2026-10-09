@@ -19,7 +19,7 @@ export default function ContactPage() {
     {
       title: "Corporate Office — D/Line",
       location: "Port Harcourt, Rivers State",
-      address: "14 Khana Street, D/Line, Port Harcourt, Rivers State",
+      address: "33 Igboukwu Street, D/Line, Port Harcourt, Rivers State",
     },
     {
       title: "Abuja Base — Dawaki",
@@ -80,6 +80,17 @@ export default function ContactPage() {
                   className="text-brand-green font-bold hover:underline"
                 >
                   ocnksglobal@gmail.com
+                </a>
+              </p>
+              <p>
+                <span className="text-brand-forest font-semibold">Website:</span>{" "}
+                <a
+                  href="https://ocnks.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brand-green font-bold hover:underline"
+                >
+                  https://ocnks.vercel.app
                 </a>
               </p>
             </div>
