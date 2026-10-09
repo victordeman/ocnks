@@ -23,7 +23,7 @@ export function SiteFooter() {
               Corporate Office — D/Line
             </h2>
             <address className="text-brand-paper/80 text-sm leading-relaxed not-italic">
-              14 Khana Street, D/Line, Port Harcourt, Rivers State
+              33 Igboukwu Street, D/Line, Port Harcourt, Rivers State
             </address>
           </div>
 
@@ -59,6 +59,17 @@ export function SiteFooter() {
                   className="hover:text-brand-gold underline underline-offset-2 transition-colors"
                 >
                   ocnksglobal@gmail.com
+                </a>
+              </p>
+              <p>
+                <span className="text-brand-paper font-medium">Website:</span>{" "}
+                <a
+                  href="https://ocnks.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-brand-gold underline underline-offset-2 transition-colors"
+                >
+                  https://ocnks.vercel.app
                 </a>
               </p>
             </div>

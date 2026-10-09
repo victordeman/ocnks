@@ -209,7 +209,7 @@ export default async function HomePage() {
                 D/Line, Port Harcourt
               </h3>
               <p className="text-brand-forest/80 text-xs">
-                14 Khana Street, D/Line, Port Harcourt, Rivers State
+                33 Igboukwu Street, D/Line, Port Harcourt, Rivers State
               </p>
             </div>
 
